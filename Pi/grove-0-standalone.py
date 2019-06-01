@@ -1,11 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Main program."""
-__author__ = "Egbert-Jan Sol"
-__copyright__ = "Copyright (C) Egbert-Jan Sol"
-__license__ = "GPLv3"
-__version__ = "0.1.1"
-
+# author = "Egbert-Jan Sol"
 # standalone, very simple, no user interface,
 # start from command line, control the doors and log the accurate warehouse temperature
 
@@ -135,18 +130,19 @@ def main():
     door_1_button.on_press = on_press_1
     door_2_button.on_press = on_press_2
 
-    try:
-        time.sleep(1)
-        print('{} Celsius'.format(sensor.temperature))
-    except KeyboardInterrupt:
-        main_relay.off()
-        door_1_relay.off()
-        door_2_relay.off()
-        main_button.led_off()
-        door_1_button.led_off()
-        door_2_button.led_off()
-        print("exit")
-        exit(1)
+    while True:
+        try:
+            time.sleep(1)
+            print('{} Celsius'.format(sensor.temperature))
+        except KeyboardInterrupt:
+            main_relay.off()
+            door_1_relay.off()
+            door_2_relay.off()
+            main_button.led_off()
+            door_1_button.led_off()
+            door_2_button.led_off()
+            print("exit")
+            exit(1)
 
 
 if __name__ == '__main__':
