@@ -8,7 +8,6 @@ import time
 from grove.button import Button
 from grove.factory import Factory
 from grove.temperature import Temper
-from grove.adc import ADC
 from grove.gpio import GPIO
 
 
@@ -22,15 +21,6 @@ class GroveRelay(GPIO):
     def off(self):
         self.write(0)
 
-
-class GroveAirQualitySensor:
-    def __init__(self, channel):
-        self.channel = channel
-        self.adc = ADC()
-
-    @property
-    def value(self):
-        return self.adc.read(self.channel)
 
 class GroveLedButton(object):
     def __init__(self, pin):
@@ -87,10 +77,8 @@ def main():
     door_1_relay = GroveRelay(26)
     door_2_relay = GroveRelay(24)
 
-    sensor_w = Factory.getTemper("MCP9808-I2C")
-    sensor_w.resolution(Temper.RES_1_16_CELSIUS)
-    sensor_o = Factory.getTemper("NTC-ADC", 0)
-    sensor_air = GroveAirQualitySensor(4)
+    sensor = Factory.getTemper("MCP9808-I2C")
+    sensor.resolution(Temper.RES_1_16_CELSIUS)
 
     def on_press_main():
         global main_state, door_1_state, door_2_state
@@ -142,7 +130,7 @@ def main():
     while True:
         try:
             time.sleep(1)
-            print('Warehouse outside {} Celsius'.format(int(sensor_o.temperature)), ' inside {} Celsius'.format(sensor_w.temperature), 'air Q {} '.format(sensor_air.value))
+            print('{} Celsius'.format(sensor.temperature))
         except KeyboardInterrupt:
             main_relay.off()
             door_1_relay.off()

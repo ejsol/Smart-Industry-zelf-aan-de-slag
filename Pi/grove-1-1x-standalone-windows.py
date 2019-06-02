@@ -1,9 +1,14 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-#author = "Egbert-Jan Sol"
+"""Main program."""
+__author__ = "Egbert-Jan Sol"
+__copyright__ = "Copyright (C) Egbert-Jan Sol"
+__license__ = "GPLv3"
+__version__ = "0.1.1"
+
 # standalone, start from windows environment, with full user interface to control doors and update temperature
 # and control the doors with I/O too and log the accurate warehouse temperature and stop button in user interface
-#TODO button in windows with temperature and air quality updates
+
 
 import time
 import tkinter as tk    # conflict with Button
@@ -11,7 +16,7 @@ import tkinter as tk    # conflict with Button
 from grove.button import Button
 from grove.factory import Factory
 from grove.temperature import Temper
-from grove.adc import ADC
+# from grove.adc import ADC
 from grove.gpio import GPIO
 
 
@@ -26,6 +31,7 @@ class GroveRelay(GPIO):
         self.write(0)
 
 
+'''
 class GroveAirQualitySensor:
     def __init__(self, channel):
         self.channel = channel
@@ -34,6 +40,7 @@ class GroveAirQualitySensor:
     @property
     def value(self):
         return self.adc.read(self.channel)
+'''
 
 
 class GroveLedButton(object):
@@ -99,13 +106,13 @@ class MyGroveStandAloneApp(tk.Frame):
         self.door_inside_relay = GroveRelay(24)
 
         self.sensor_w = Factory.getTemper("MCP9808-I2C")
-        self.sensor_o = Factory.getTemper("NTC-ADC", 0)
+#        self.sensor_o = Factory.getTemper("NTC-ADC", 0)
         self.sensor_w.resolution(Temper.RES_1_16_CELSIUS)
         print('{} Celsius warehouse temperature'.format(self.sensor_w.temperature))
-        print('{} Celsius outside temperature'.format(int(self.sensor_o.temperature)))
+#        print('{} Celsius outside temperature'.format(int(self.sensor_o.temperature)))
 
-        self.sensor_air = GroveAirQualitySensor(4)
-        print('{} Air Quality'.format(self.sensor_air.value))
+#        self.sensor_air = GroveAirQualitySensor(4)
+#        print('{} Air Quality'.format(self.sensor_air.value))
 
         # Handle tkinter part
         super().__init__(master)
