@@ -28,6 +28,7 @@ class GroveLedButton(object):
         self.__led = Factory.getOneLed("GPIO-HIGH", pin)
         self.__btn = Factory.getButton("GPIO-LOW", pin + 1)
         self.__led.light(False)
+        self.__on_release = None
         self.__on_press = None
         self.__btn.on_event(self, GroveLedButton.__handle_event)
 
@@ -49,10 +50,6 @@ class GroveLedButton(object):
             if evt["pressed"]:
                 if callable(self.__on_press):
                     self.__on_press()
-                    if self.__led.light(True):
-                        self.__led.light(False)
-                    else:
-                        self.__led.light(True)
 
     def led_on(self):
         self.__led.light(True)
