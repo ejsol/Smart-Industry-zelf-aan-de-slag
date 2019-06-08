@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-#
 # (c) EJSol 8 jun 2019 minimal text demo based on Rev-local-switch-pyload-v1 of 3 jan
 # main_switch, switch_1 and switch_2, main_relay, etc input/output are all defined in Kunbus piCtory
 
