@@ -5,6 +5,12 @@
 #
 """Combined events with mainloop() and own cyclic functions.
 
+Same as Rev-local-switch-control-v1 but now to be downloaded from RevPiPyControl,
+the other one can be started from the local User interface and has a stop button
+written in tkinter. The advantage is that there is no windows on the RevPi needed
+as it can be started remotely.
+
+
 Let the LED A1 blink green during program is running.
 
 piCtory Setup: RevPICore | DIO
