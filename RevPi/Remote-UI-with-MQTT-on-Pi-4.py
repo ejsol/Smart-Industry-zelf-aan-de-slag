@@ -1,11 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Main program."""
-__author__ = "Egbert-Jan Sol"
-__copyright__ = "Copyright (C) Egbert-Jan Sol"
-__license__ = "GPLv3"
-__version__ = "0.1.1"
-
+#
+# author = "Egbert-Jan Sol"
+# to be used with MQTT broker on 10.0.0.4 (Pi-4 next to Rev-2)
 
 from tkinter import *
 import paho.mqtt.client as mqtt
@@ -274,7 +271,8 @@ def on_message(client, userdata, message):
 
 if __name__ == '__main__':
 
-    broker = "10.0.0.100"
+    broker = "10.0.0.4"
+    #TODO put broker IP in program entry
     port = 1883
     logging.basicConfig(level=logging.INFO)
     # user DEBUG, INFO, WARNING
