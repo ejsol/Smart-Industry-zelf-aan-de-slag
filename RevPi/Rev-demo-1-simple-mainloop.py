@@ -5,16 +5,16 @@
 
 import revpimodio2
 
-rpi = revpimodio2.RevPiModIO(autorefresh=True)
-
-main_state = False
-state_1 = False
-state_2 = False
-
 
 def main():
 
     global main_state, state_1, state_2
+
+    main_state = False
+    state_1 = False
+    state_2 = False
+
+    rpi = revpimodio2.RevPiModIO(autorefresh=True)
 
     def event_main_on(ioname, iovalue):
         global main_state
@@ -71,6 +71,7 @@ def main():
     while not rpi.exitsignal.wait(1):
         rpi.core.a1green.value = not rpi.core.a1green.value
 
+    #exit/terminate program and reset output to False
     rpi.io.main_relay.value = False
     rpi.io.relay_1.value = False
     rpi.io.relay_2.value = False
