@@ -1,8 +1,20 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
-# (c) EJSol 8 jun 2019 minimal text demo based on Rev-local-switch-pyload-v1 of 3 jan
+# (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
+#
+# minimal text demo to be started with e.g. Revpipycontrol from remote
 # main_switch, switch_1 and switch_2, main_relay, etc input/output are all defined in Kunbus piCtory
+#
+# piCtory Setup: RevPICore | DIO
+#
+# I_1 main_switch
+# I_3 switch_1
+# I-5 switch_2
+#
+# O_1 main_relay
+# O_3 relay_1
+# O-5 relay_2
 
 import revpimodio2
 

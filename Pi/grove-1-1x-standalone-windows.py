@@ -1,14 +1,11 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Main program."""
-__author__ = "Egbert-Jan Sol"
-__copyright__ = "Copyright (C) Egbert-Jan Sol"
-__license__ = "GPLv3"
-__version__ = "0.1.1"
-
+#
+# (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
+#
 # standalone, start from windows environment, with full user interface to control doors and update temperature
 # and control the doors with I/O too and log the accurate warehouse temperature and stop button in user interface
-
+# this version -1x- is a little different in amount of grove sensors (only one high accuracy temperature, not three)
 
 import time
 import tkinter as tk    # conflict with Button

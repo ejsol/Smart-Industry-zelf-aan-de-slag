@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-#author = "Egbert-Jan Sol"
+#
+# (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
+#
 # standalone, start from windows environment, with full user interface to control doors and update temperature
 # and control the doors with I/O too and log the accurate warehouse temperature and stop button in user interface
-#TODO button in windows with temperature and air quality updates
+# TODO button in windows with temperature and air quality updates
 
 import time
 import tkinter as tk    # conflict with Button

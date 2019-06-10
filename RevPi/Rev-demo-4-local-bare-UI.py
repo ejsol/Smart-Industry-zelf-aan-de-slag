@@ -1,27 +1,21 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
-# (c) EJSol 3 jan
+# (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
 #
-"""Combined events with mainloop() and own cyclic functions.
+# to be run from the windows user interface in terminal with python3 Rev-demo-4-local-bare-UI.py
+# main_switch, switch_1 and switch_2, main_relay, etc input/output are all defined in Kunbus piCtory
+# piCtory Setup: RevPICore | DIO
+#
+# I_1 main_switch
+# I_3 switch_1
+# I-5 switch_2
+#
+# O_1 main_relay
+# O_3 relay_1
+# O-5 relay_2
+#
 
-Same as Rev-local-switch-pyload with has to be downloaded and started from RevPiPyControl
-and does not require the windows interface as this version.
-This version is started locally from the windows interface.
-
-Let the LED A1 blink green during program is running.
-
-piCtory Setup: RevPICore | DIO
-
-main_switch I_1
-switch_1 I_3
-switch_2 I_5
-
-main_relay O_1
-relay_1 O_3
-relay_2 O_5
-
-"""
 from tkinter import *
 import revpimodio2
 

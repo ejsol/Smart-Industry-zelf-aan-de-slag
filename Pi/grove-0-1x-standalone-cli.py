@@ -1,8 +1,11 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-# author = "Egbert-Jan Sol"
+#
+# (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
+#
 # standalone, very simple, no user interface,
 # start from command line, control the doors and log the accurate warehouse temperature
+# this version -1x- is a little different in amount of grove sensors (only one high accuracy temperature, not three)
 
 import time
 from grove.button import Button

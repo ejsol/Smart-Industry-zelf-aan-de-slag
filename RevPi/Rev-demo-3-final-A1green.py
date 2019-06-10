@@ -1,29 +1,20 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
-# (c) EJSol 3 jan
+# (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
 #
-"""Combined events with mainloop() and own cyclic functions.
-
-Same as Rev-local-switch-control-v1 but now to be downloaded from RevPiPyControl,
-the other one can be started from the local User interface and has a stop button
-written in tkinter. The advantage is that there is no windows on the RevPi needed
-as it can be started remotely.
-
-
-Let the LED A1 blink green during program is running.
-
-piCtory Setup: RevPICore | DIO
-
-main_switch I_1
-switch_1 I_3
-switch_2 I_5
-
-main_relay O_1
-relay_1 O_3
-relay_2 O_5
-
-"""
+#  demo with more functionality to be started with e.g. Revpipycontrol from remote
+# main_switch, switch_1 and switch_2, main_relay, etc input/output are all defined in Kunbus piCtory
+#
+# piCtory Setup: RevPICore | DIO
+#
+# I_1 main_switch
+# I_3 switch_1
+# I-5 switch_2
+#
+# O_1 main_relay
+# O_3 relay_1
+# O-5 relay_2
 
 import revpimodio2
 

@@ -1,13 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Main program."""
-__author__ = "Egbert-Jan Sol"
-__copyright__ = "Copyright (C) Egbert-Jan Sol"
-__license__ = "GPLv3"
-__version__ = "0.1.1"
-
+#
+# (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
+#
 # app running control I/O for doors and collecting temperature data,
-# start from command line and use from other computer opc client to read data froom this opc server
+# start from command line and use from other computer opc client to read data from this opc server
 
 import time
 import datetime
@@ -77,10 +74,8 @@ class GroveLedButton(object):
         self.__led.light(False)
 
 
-# class MyGroveOpcApp(tk.Frame):
 class MyGroveOpcTerminalApp:
 
-    # def __init__(self, master=None):
     def __init__(self):
 
         self.warehouse_state = False
@@ -106,7 +101,6 @@ class MyGroveOpcTerminalApp:
         # print('{} Celsius warehouse temperature'.format(self.temperature_warehouse.temperature))
         # print('{} Celsius outside temperature'.format(int(self.temperature_outdoor.temperature)))
         # print('{} Air Quality (carbon monoxide & other gasses'.format(self.warehouse_air_quality.value))
-
 
         print('starting OPC server ')
         self.opc_server = Server()
@@ -214,7 +208,7 @@ class MyGroveOpcTerminalApp:
         """Start event system and own cyclic loop."""
 
         try:
-            #dirty temp (client changes every 5 sec opc_warehouse_state
+            # dirty temp (client changes every 5 sec opc_warehouse_state)
             if self.opc_warehouse_state.get_value():
                 self.warehouse_button.led_on()
             else:
@@ -222,10 +216,9 @@ class MyGroveOpcTerminalApp:
             time.sleep(5)
             self.update_opc(0)
         except KeyboardInterrupt:
-              self.closeapp()
+            self.closeapp()
+
 
 if __name__ == '__main__':
-    #    root = tk.Tk()
-    #    MyGroveOpcApp(root).mainloop()
     myapp = MyGroveOpcTerminalApp()
     myapp.start()

@@ -1,8 +1,22 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
-# author = "Egbert-Jan Sol"
+# (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
+#
 # to be used with MQTT broker on 10.0.0.4 (Pi-4 next to Rev-2)
+#
+# main_switch, switch_1 and switch_2, main_relay, etc input/output are all defined in Kunbus piCtory
+# piCtory Setup: RevPICore | DIO
+#
+# I_1 main_switch
+# I_3 switch_1
+# I-5 switch_2
+#
+# O_1 main_relay
+# O_3 relay_1
+# O-5 relay_2
+#
+
 
 from tkinter import *
 import paho.mqtt.client as mqtt
@@ -272,7 +286,7 @@ def on_message(client, userdata, message):
 if __name__ == '__main__':
 
     broker = "10.0.0.4"
-    #TODO put broker IP in program entry
+    # TODO put broker IP in program entry
     port = 1883
     logging.basicConfig(level=logging.INFO)
     # user DEBUG, INFO, WARNING
@@ -293,7 +307,7 @@ if __name__ == '__main__':
     # maar truc is om de client object uit te rusten met extra variables die niet met callback terug komen
 
     # TODO class voor een object waar binnen the parameter/variable and object object-scope instead of system
-    #   have't figured out how to deal with the screen object in a MQTT object.
+    #   still need to figure out how to deal with the screen object in a MQTT object.
 
     client = mqtt.Client("test")
     # Client client_id, clean_session, userdata=none, protocol MQTTv3

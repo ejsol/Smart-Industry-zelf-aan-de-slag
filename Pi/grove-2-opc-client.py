@@ -1,10 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Main program."""
-__author__ = "Egbert-Jan Sol"
-__copyright__ = "Copyright (C) Egbert-Jan Sol"
-__license__ = "GPLv3"
-__version__ = "0.1.1"
+#
+# (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
 
 from opcua import Client
 import time

@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-# author = "Egbert-Jan Sol"
+#
+# (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
+#
 # standalone, very simple, no user interface,
 # start from command line, control the doors and log the accurate warehouse temperature
 
@@ -31,6 +33,7 @@ class GroveAirQualitySensor:
     @property
     def value(self):
         return self.adc.read(self.channel)
+
 
 class GroveLedButton(object):
     def __init__(self, pin):
@@ -142,7 +145,8 @@ def main():
     while True:
         try:
             time.sleep(1)
-            print('Warehouse outside {} Celsius'.format(int(sensor_o.temperature)), ' inside {} Celsius'.format(sensor_w.temperature), 'air Q {} '.format(sensor_air.value))
+            print('Warehouse outside {} Celsius'.format(int(sensor_o.temperature)),
+                  ' inside {} Celsius'.format(sensor_w.temperature), 'air Q {} '.format(sensor_air.value))
         except KeyboardInterrupt:
             main_relay.off()
             door_1_relay.off()

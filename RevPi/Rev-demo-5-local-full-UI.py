@@ -1,10 +1,20 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Main program."""
-__author__ = "Egbert-Jan Sol"
-__copyright__ = "Copyright (C) Egbert-Jan Sol"
-__license__ = "GPLv3"
-__version__ = "0.1.1"
+#
+# (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
+#
+# to be run from the windows user interface in terminal with python3 Rev-demo-5-full-UI.py
+# main_switch, switch_1 and switch_2, main_relay, etc input/output are all defined in Kunbus piCtory
+# piCtory Setup: RevPICore | DIO
+#
+# I_1 main_switch
+# I_3 switch_1
+# I-5 switch_2
+#
+# O_1 main_relay
+# O_3 relay_1
+# O-5 relay_2
+#
 
 from tkinter import *
 import revpimodio2
