@@ -1,13 +1,13 @@
 Dit zijn de files behorende bij de Zelf-aan-de-Slag data-deel en cyber security Smart Industry workshop
 
-Op het hoofd niveau hoort de PDF met de slides voor de workshop inclusief de nodige hard/soft/network instellingen te staan.
-Die wordt met cursisten gedeeld of is op verzoek beschikbaar. 
+Op het hoofd niveau staat de PDF met de slides en 2 handleidingen met de nodige hard/soft/network instellingen
+voor de RevPi en de Raspberry Pi sessies. De PDF en handleidingen is op verzoek beschikbaar.
 
 In de Pi directory staan de voorbeelden voor gebruik van de Pi als I/O device en het OPC voorbeeld. 
 Voor de OPC app zijn twee machines nodig, een op 10.0.0.4 en een client Pi op 10.0.0.5 (of een eigen PC)
 
 In de RevPi staan de voorbeelden om met de centrale RevPi (10.0.0.2 en 10.0.0.3) te werken. 
-Dan kan vanaf een eigen PC met daar op de Revpimodio.org software
+Dan kan vanaf een eigen PC met daar op de Revpimodio.org software running the RevPi Python Control program
 
 Bij vragen egbert-jan.sol@tno.nl
 
