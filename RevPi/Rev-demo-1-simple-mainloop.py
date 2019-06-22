@@ -10,11 +10,11 @@
 #
 # I_1 main_switch
 # I_3 switch_1
-# I-5 switch_2
+# I_5 switch_2
 #
 # O_1 main_relay
 # O_3 relay_1
-# O-5 relay_2
+# O_5 relay_2
 
 import revpimodio2
 

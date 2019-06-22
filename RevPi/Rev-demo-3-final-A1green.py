@@ -10,11 +10,14 @@
 #
 # I_1 main_switch
 # I_3 switch_1
-# I-5 switch_2
+# I_5 switch_2
 #
 # O_1 main_relay
 # O_3 relay_1
-# O-5 relay_2
+# O_5 relay_2
+#
+# A1green LED indicates running program, A2red indicated system is on (main_switch on, main_state = True)
+#
 
 import revpimodio2
 
@@ -43,6 +46,10 @@ class MyRevPiApp:
         self.rpi.io.switch_2.reg_event(self.event_switch_2_off, edge=revpimodio2.FALLING)
 
         self.rpi.core.a1green.value = True      # program is loaded and active
+        self.rpi.core.a1red.value = False
+        self.rpi.core.a2green.value = False
+        self.rpi.core.a2red.value = False
+
         self.rpi.io.main_relay.value = False   # O 1 (output 1) right side connector on DIO is odd input/output nr
         self.rpi.io.relay_1.value = False      # O 3
         self.rpi.io.relay_2.value = False      # O 5
@@ -55,6 +62,7 @@ class MyRevPiApp:
         """Cleanup function to leave the RevPi in a defined state."""
         # Switch off LED and outputs before exit program
         self.rpi.core.a1green.value = False
+        self.rpi.core.a1red.value = False
         self.rpi.io.main_relay.value = False
         self.rpi.io.relay_1.value = False
         self.rpi.io.relay_2.value = False
@@ -63,7 +71,7 @@ class MyRevPiApp:
     def event_main_on(self, ioname, iovalue):
         """Called if main_switch goes to True."""
         # Switch on/off output O_1
-        self.rpi.core.a2red.value = False
+        self.rpi.core.a2red.value = True
         self.rpi.io.main_relay.value = True
         self.main_state = True
 
@@ -110,7 +118,8 @@ class MyRevPiApp:
 
             # Switch on / off green part of LED A1 to signal to user that PLC runs
             self.rpi.core.a1green.value = not self.rpi.core.a1green.value
-
+            if self.main_state:
+                self.rpi.core.a2red.value = not self.rpi.core.a2red.value
 
 if __name__ == "__main__":
     root = MyRevPiApp()
