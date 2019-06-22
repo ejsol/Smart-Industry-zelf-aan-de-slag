@@ -3,7 +3,7 @@
 #
 # (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
 #
-# minimal text demo to be started with e.g. Revpipycontrol from remote
+# minimal text demo to be started with e.g. Revpipycontrol from remote RevPi Python Control on a other computer
 # main_switch, switch_1 and switch_2, main_relay, etc input/output are all defined in Kunbus piCtory
 #
 # piCtory Setup: RevPICore | DIO

@@ -3,7 +3,7 @@
 #
 # (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
 #
-# to be run from the windows user interface in terminal with python3 Rev-demo-4-local-bare-UI.py
+# to be run from the windows user interface in terminal with python3 Rev-demo-1-bare-UI-local-on-RevPi.py
 # main_switch, switch_1 and switch_2, main_relay, etc input/output are all defined in Kunbus piCtory
 # piCtory Setup: RevPICore | DIO
 #
