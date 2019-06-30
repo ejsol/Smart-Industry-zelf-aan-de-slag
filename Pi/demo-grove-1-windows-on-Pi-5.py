@@ -89,16 +89,16 @@ class MyGroveStandAloneApp(tk.Frame):
         self.door_time = 0
 
         self.warehouse_button = GroveLedButton(5)
-        self.door_outside_button = GroveLedButton(18)
-        self.door_inside_button = GroveLedButton(16)
+        self.door_outside_button = GroveLedButton(16)
+        self.door_inside_button = GroveLedButton(18)
 
         self.warehouse_button.on_press = self.on_press_main
         self.door_outside_button.on_press = self.on_press_door_outside
         self.door_inside_button.on_press = self.on_press_door_inside
 
         self.warehouse_relay = GroveRelay(22)
-        self.door_outside_relay = GroveRelay(26)
-        self.door_inside_relay = GroveRelay(24)
+        self.door_outside_relay = GroveRelay(24)
+        self.door_inside_relay = GroveRelay(26)
 
         self.sensor_w = Factory.getTemper("MCP9808-I2C")
         self.sensor_o = Factory.getTemper("NTC-ADC", 0)
