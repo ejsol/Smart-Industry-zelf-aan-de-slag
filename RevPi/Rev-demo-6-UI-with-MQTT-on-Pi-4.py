@@ -5,6 +5,9 @@
 #
 # to be used with MQTT broker on 10.0.0.4 (Pi-4 next to Rev-2)
 #
+# first check that no other PLC program is running on the Rev-2, (e.g. with RevPiPyControl, stop running PLC prog.)
+# start this program on Pi-4, it will control the I/O on the Rev-2,
+#
 # main_switch, switch_1 and switch_2, main_relay, etc input/output are all defined in Kunbus piCtory
 # piCtory Setup: RevPICore | DIO
 #
