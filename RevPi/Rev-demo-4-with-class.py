@@ -1,9 +1,12 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
-# (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
+# (c) EJSol 1 jul 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
 #
 # minimal text demo to be started with e.g. Revpipycontrol from remote
+# or from RevPi itself using: python3 Rev-demo-... or after making it executable (chmod +x Rev*) using: ./Rev-demo-..
+# check after killing it with: ps -ae is process has stopped, else get the process id (pid) and: sudo kill -HUP pid
+#
 # main_switch, switch_1 and switch_2, main_relay, etc input/output are all defined in Kunbus piCtory
 #
 # piCtory Setup: RevPICore | DIO
