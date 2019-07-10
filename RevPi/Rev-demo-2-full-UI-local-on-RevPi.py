@@ -5,7 +5,7 @@
 #
 # to be run from the windows user interface in terminal with python3 Rev-demo-2-full-UI-localon-RevPi.py
 # or if made executable (chmod +x Rev...) with: ./Rev-...
-# only run this file after the Rev-2 has been put in WINDOWS mode (after a: startx)
+# only run this file after the RevPi has been put in WINDOWS mode (after a: startx)
 # do not run it from remote RevPiPyControl if Rev-2 is in CLI mode (the normal mode)
 #
 # main_switch, switch_1 and switch_2, main_relay, etc input/output are all defined in Kunbus piCtory
