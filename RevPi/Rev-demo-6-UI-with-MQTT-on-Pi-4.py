@@ -4,6 +4,8 @@
 # (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
 #
 # to be used with MQTT broker on 10.0.0.4 (Pi-4 next to RevPi (RevPi on same 10.0.0.0/24 subnet)
+# note in RevPi MQTT setting broker is now on 10.0.0.4, but can be on localhost too
+# in case of broker on localhost, change line 293 broker = "localhost"
 #
 # first check that no other PLC program is running on the RevPi, (e.g. with RevPiPyControl, stop running PLC prog.)
 # start this program on Pi-4, it will control the I/O on the RevPi,
