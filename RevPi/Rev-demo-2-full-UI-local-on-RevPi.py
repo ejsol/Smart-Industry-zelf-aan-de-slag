@@ -6,7 +6,8 @@
 # to be run from the windows user interface in terminal with python3 Rev-demo-2-full-UI-localon-RevPi.py
 # or if made executable (chmod +x Rev...) with: ./Rev-...
 # only run this file after the RevPi has been put in WINDOWS mode (after a: startx)
-# do not run it from remote RevPiPyControl if Rev-2 is in CLI mode (the normal mode)
+# do not run it from remote RevPiPyControl
+# if VNC is configured on on the RevPi (raspi-config), then you can remotely take over the screen and turn it on/of
 #
 # main_switch, switch_1 and switch_2, main_relay, etc input/output are all defined in Kunbus piCtory
 # piCtory Setup: RevPICore | DIO
@@ -34,7 +35,7 @@ class MyRevPiApp(Frame):
         self.door_2_state = False
         self.door_count = 0
         self.system_on_time = 0
-        self.system_on = 0
+        self.system_on = time.time()
         self.system_delta_time = 0
         self.door_open_time = 0
         self.door_time = 0
@@ -90,8 +91,9 @@ class MyRevPiApp(Frame):
         # top row with switches (buttons) in on state (red, grayed in off mode)
 
         self.btn_main_on = Button(self.master, text="Turn System On", width=15)
-        # only screen control after physical switch (event_main_switch) is turned on, then button is also active
-        # self.btn_main_on["command"] = self.event_button_main_on
+        # only screen control after physical switch (event_main_switch) is turned on,
+        # then comment line below out and comment event_button_main_on out too.
+        self.btn_main_on["command"] = self.event_button_main_on
         self.btn_main_on.grid(row=1, column=0)
 
         self.btn_door_1_open = Button(self.master, text="Open Outside Door", width=15)
@@ -253,10 +255,10 @@ class MyRevPiApp(Frame):
             self.door_open_time = self.door_open_time + time.time() - self.door_time
             self.lbl_energy.config(text="loss: " + str(int(self.door_open_time)))
             self.rpi.io.relay_2.value = False
-    '''
+
     def event_button_main_on(self):
         self.event_main_switch_on(self.rpi.io.main_switch.name, True)
-    '''
+
     def event_button_main_off(self):
         self.event_main_switch_off(self.rpi.io.main_switch.name, False)
 
