@@ -9,7 +9,7 @@
 import time
 import datetime
 # import tkinter as tk
-from opcua import Server
+from opcua import ua, uamethod, Server
 from grove.button import Button
 from grove.factory import Factory
 from grove.temperature import Temper
@@ -96,8 +96,10 @@ class MyGroveOpcTerminalApp:
 
         self.temperature_warehouse = Factory.getTemper("MCP9808-I2C")
         self.temperature_warehouse.resolution(Temper.RES_1_16_CELSIUS)
-        self.temperature_outdoor = Factory.getTemper("NTC-ADC", 0)
-        self.warehouse_air_quality = GroveAirQualitySensor(4)
+        self.temperature_outdoor = Factory.getTemper("NTC-ADC", 2)
+        # 2 implies on the grove base hat board port A2, top row, last port)
+        self.warehouse_air_quality = GroveAirQualitySensor(6)
+        # 6 implies on the grove base hat board port A6, middle row, last port
         # print('{} Celsius warehouse temperature'.format(self.temperature_warehouse.temperature))
         # print('{} Celsius outside temperature'.format(int(self.temperature_outdoor.temperature)))
         # print('{} Air Quality (carbon monoxide & other gasses'.format(self.warehouse_air_quality.value))
@@ -114,13 +116,13 @@ class MyGroveOpcTerminalApp:
         self.param = self.opc_node.add_object(self.addspace, "Parameters")
 
         self.opc_time = self.param.add_variable(self.addspace, "Time", 0)
-        self.opc_temperature_w = self.param.add_variable(self.addspace, "Temperature warehouse", 0)
-        self.opc_temperature_o = self.param.add_variable(self.addspace, "Temperature outdoor", 0)
-        self.opc_warehouse_air = self.param.add_variable(self.addspace, "Warehouse air", 0)
-        self.opc_trigger = self.param.add_variable(self.addspace, "Trigger", 0)
-        self.opc_warehouse_state = self.param.add_variable(self.addspace, "Warehouse state", 0)
-        self.opc_door_outside = self.param.add_variable(self.addspace, "Outside door", 0)
-        self.opc_door_inside = self.param.add_variable(self.addspace, "Inside door", 0)
+        self.opc_temperature_w = self.param.add_variable(self.addspace, "Temperature warehouse", 0, ua.VariantType.float)
+        self.opc_temperature_o = self.param.add_variable(self.addspace, "Temperature outdoor", 0, ua.VariantType.float)
+        self.opc_warehouse_air = self.param.add_variable(self.addspace, "Warehouse air", 0, ua.VariantType.float)
+        self.opc_trigger = self.param.add_variable(self.addspace, "Trigger", 0, ua.VariantType.boolean)
+        self.opc_warehouse_state = self.param.add_variable(self.addspace, "Warehouse state", 0, ua.VariantType.boolean)
+        self.opc_door_outside = self.param.add_variable(self.addspace, "Outside door", 0, ua.VariantType.boolean)
+        self.opc_door_inside = self.param.add_variable(self.addspace, "Inside door", 0, ua.VariantType.boolean)
 
         self.opc_time.set_writable()
         self.opc_temperature_w.set_writable()
@@ -207,16 +209,17 @@ class MyGroveOpcTerminalApp:
     def start(self):
         """Start event system and own cyclic loop."""
 
-        try:
-            # dirty temp (client changes every 5 sec opc_warehouse_state)
-            if self.opc_warehouse_state.get_value():
-                self.warehouse_button.led_on()
-            else:
-                self.warehouse_button.led_off()
-            time.sleep(5)
-            self.update_opc(0)
-        except KeyboardInterrupt:
-            self.closeapp()
+        while True:
+            try:
+                # dirty temp (client changes every 5 sec opc_warehouse_state)
+                if self.opc_warehouse_state.get_value():
+                    self.warehouse_button.led_on()
+                else:
+                    self.warehouse_button.led_off()
+                time.sleep(5)
+                self.update_opc(0)
+            except KeyboardInterrupt:
+                self.closeapp()
 
 
 if __name__ == '__main__':
