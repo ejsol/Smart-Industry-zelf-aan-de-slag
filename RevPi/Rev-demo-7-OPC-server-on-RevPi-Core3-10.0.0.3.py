@@ -28,6 +28,7 @@
 # A1green LED indicates running program, A2red indicated system is on (main_switch on, main_state = True)
 #
 
+import time
 import datetime
 import revpimodio2
 from opcua import Server
@@ -38,7 +39,22 @@ class MyRevPiOpcuaServerApp:
     def __init__(self):
 
         """Init MyRevPiApp class."""
-
+        
+        self.main_state = False
+        self.state_1_on = False
+        self.state_2_on = False
+        self.system_on_time = 0
+        self.system_on = 0
+        self.system_delta_time = 0
+        self.door_count = 0
+        self.door_outside_open_time = 0
+        self.door_outside_time = 0
+        self.door_inside_open_time = 0
+        self.door_inside_time = 0
+        self.open_percentage = 0
+        self.door_open_time = 0
+        self.door_outside_share_percentage = 50   # = door_outside/(door_outside+door_inside)time
+        
         # Instantiate RevPiModIO
         self.rpi = revpimodio2.RevPiModIO(autorefresh=True)
 
@@ -66,9 +82,6 @@ class MyRevPiOpcuaServerApp:
         self.rpi.io.relay_1.value = False      # O 3
         self.rpi.io.relay_2.value = False      # O 5
 
-        self.main_state = False
-        self.state_1_on = False
-        self.state_2_on = False
 
         print('starting OPC server ')
         self.opc_server = Server()
@@ -86,12 +99,16 @@ class MyRevPiOpcuaServerApp:
         self.opc_warehouse_state = self.param.add_variable(self.addspace, "System state", 0)
         self.opc_door_outside = self.param.add_variable(self.addspace, "Outside door", 0)
         self.opc_door_inside = self.param.add_variable(self.addspace, "Inside door", 0)
+        self.opc_open_percentage = self.param.add_variable(self.addspace, "Open/Close percentage", 0)
+        self.opc_door_outside_share_percentage = self.param.add_variable(self.addspace, "Outside/Inside share")
 
         self.opc_time.set_writable()
         self.opc_trigger.set_writable()
         self.opc_warehouse_state.set_writable()
         self.opc_door_outside.set_writable()
         self.opc_door_inside.set_writable()
+        self.opc_open_percentage.set_writeable()
+        self.opc_door_outside_share_percentage.set_writeable()
 
         print('starting OPC server .....')
         self.opc_server.start()
@@ -117,12 +134,20 @@ class MyRevPiOpcuaServerApp:
         self.opc_door_outside.set_value(self.state_1_on)
         self.opc_door_inside.set_value(self.state_2_on)
 
+        self.door_open_time = self.door_outside_open_time + self.door_inside_open_time
+        self.open_percentage = (self.door_open_time/self.system_on_time)*100
+        self.door_outside_share_percentage = (self.door_outside_open_time/self.door_open_time)*100
+
+        self.opc_open_percentage.set_value(self.open_percentage)
+        self.opc_door_outside_share_percentage.set_value(self.door_outside_share_percentage)
+
     def event_main_on(self, ioname, iovalue):
         """Called if main_switch goes to True."""
         # Switch on/off output O_1
         self.rpi.core.a2red.value = True
         self.rpi.io.main_relay.value = True
         self.main_state = True
+        self.system_on = time.time()
         self.update_opc(1)
 
     def event_main_off(self, ioname, iovalue):
@@ -133,6 +158,9 @@ class MyRevPiOpcuaServerApp:
         self.rpi.io.relay_2.value = False
         self.rpi.core.a2red.value = False
         self.main_state = False
+        self.system_on_time = self.system_on_time + time.time() - self.system_on
+        self.door_outside_open_time = self.door_outside_open_time + time.time() - self.door_outside_time
+        self.door_inside_open_time = self.door_inside_open_time + time.time() - self.door_inside_time
         self.update_opc(1)
 
     def event_switch_1_on(self, ioname, iovalue):
@@ -140,12 +168,15 @@ class MyRevPiOpcuaServerApp:
         if self.main_state and not self.state_2_on:
             self.rpi.io.relay_1.value = True
             self.state_1_on = True
+            self.door_outside_time = time.time()
         self.update_opc(2)
 
     def event_switch_1_off(self, ioname, iovalue):
         """Called if I_3 goes to false."""
         self.rpi.io.relay_1.value = False
         self.state_1_on = False
+        self.door_count = self.door_count + 1
+        self.door_outside_open_time = self.door_outside_open_time + time.time() - self.door_outside_time
         self.update_opc(2)
 
     def event_switch_2_on(self, ioname, iovalue):
@@ -153,12 +184,15 @@ class MyRevPiOpcuaServerApp:
         if self.main_state and not self.state_1_on:
             self.rpi.io.relay_2.value = True
             self.state_2_on = True
+            self.door_inside_time = time.time()
         self.update_opc(3)
 
     def event_switch_2_off(self, ioname, iovalue):
         """Called if I_5 goes to False."""
         self.rpi.io.relay_2.value = False
         self.state_2_on = False
+        self.door_count = self.door_count + 1
+        self.door_inside_open_time = self.door_inside_open_time + time.time() - self.door_inside_time
         self.update_opc(3)
 
     def start(self):

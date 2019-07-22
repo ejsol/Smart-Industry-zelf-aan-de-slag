@@ -234,7 +234,8 @@ def on_message(client, userdata, message):
     global door_2_count, door_2_count_delta
 
     # TODO I use here variable with a global scope als call-back routine can't pass parameters
-    #  but instance variable might be better
+    #  but instance variable might be better, also why ? are we using global here (local within class)
+    #  and why not we remove the declaration in the beginning of main.
 
     # topic = message.topic
     # [ data , measurement,  text   ,   sensorname ]
