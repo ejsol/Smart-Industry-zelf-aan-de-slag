@@ -116,7 +116,7 @@ class MyGroveOpcTerminalApp:
         self.param = self.opc_node.add_object(self.addspace, "Parameters")
 
         self.opc_time = self.param.add_variable(self.addspace, "Time", 0)
-        self.opc_temperature_w = self.param.add_variable(self.addspace, "Temperature warehouse", 0, ua.VariantType.float)
+        self.opc_temperature_w = self.param.add_variable(self.addspace, "Temperature warehouse", 0, datatype = ua.VariantType.float)
         self.opc_temperature_o = self.param.add_variable(self.addspace, "Temperature outdoor", 0, ua.VariantType.float)
         self.opc_warehouse_air = self.param.add_variable(self.addspace, "Warehouse air", 0, ua.VariantType.float)
         self.opc_trigger = self.param.add_variable(self.addspace, "Trigger", 0, ua.VariantType.boolean)
