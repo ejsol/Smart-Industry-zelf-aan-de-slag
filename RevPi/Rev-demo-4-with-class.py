@@ -79,8 +79,9 @@ class MyRevPiApp:
             self.state_1_on = True
 
     def event_switch_1_off(self, ioname, iovalue):
-        self.rpi.io.relay_1.value = False
-        self.state_1_on = False
+        if self.main_state:
+            self.rpi.io.relay_1.value = False
+            self.state_1_on = False
 
     def event_switch_2_on(self, ioname, iovalue):
         if self.main_state and not self.state_1_on:
@@ -88,8 +89,9 @@ class MyRevPiApp:
             self.state_2_on = True
 
     def event_switch_2_off(self, ioname, iovalue):
-        self.rpi.io.relay_2.value = False
-        self.state_2_on = False
+        if self.main_state:
+            self.rpi.io.relay_2.value = False
+            self.state_2_on = False
 
     def start(self):
         # Start event system without blocking here

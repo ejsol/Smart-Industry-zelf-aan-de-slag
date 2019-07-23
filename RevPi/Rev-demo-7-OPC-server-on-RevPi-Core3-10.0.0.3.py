@@ -51,18 +51,19 @@ class MyRevPiOpcuaServerApp:
         self.trigger_door_inside_open = 5
         self.trigger_door_inside_close = 6
 
-        self.system_on_time = 0
-        self.system_off_time = 0
-        self.system_delta_time = 0
+        self.system_on_time = 0.0
+        self.system_off_time = 0.0
+        self.system_delta_time = 0.0
+        self.system_running_time = 0.0
         self.system_sum_time = 0.0
         self.door_count = 0
-        self.door_outside_time_opened = 0
-        self.door_outside_time_closed = 0
-        self.door_outside_delta_time_open = 0
+        self.door_outside_time_opened = 0.0
+        self.door_outside_time_closed = 0.0
+        self.door_outside_delta_time_open = 0.0
         self.door_outside_sum_time_open = 0.0
-        self.door_inside_time_opened = 0
-        self.door_inside_time_closed = 0
-        self.door_inside_delta_time_open = 0
+        self.door_inside_time_opened = 0.0
+        self.door_inside_time_closed = 0.0
+        self.door_inside_delta_time_open = 0.0
         self.door_inside_sum_time_open = 0.0
         self.open_percentage = 0
         self.door_open_time = 0.0
@@ -73,6 +74,7 @@ class MyRevPiOpcuaServerApp:
         # Instantiate RevPiModIO
         self.rpi = revpimodio2.RevPiModIO(autorefresh=True)
         # standard cycletime on Core-3 is 20 (msec), by uncommenting next line you extend it to 50 msec
+        # might be needed if once more print statements are used in event handlers
         # self.rpi.cycletime = 50
 
         # Handle SIGINT / SIGTERM to exit program cleanly
@@ -150,7 +152,6 @@ class MyRevPiOpcuaServerApp:
         self.main_state = True
         self.system_on_time = time.time()
         self.trigger = self.trigger_system_on_trigger
-        # self.update_opc()
 
     def event_main_off(self, ioname, iovalue):
         """Called if main_switch goes to false."""
@@ -162,7 +163,7 @@ class MyRevPiOpcuaServerApp:
         self.system_off_time = time.time()
         self.system_delta_time = self.system_off_time - self.system_on_time
         self.system_sum_time = self.system_sum_time + self.system_delta_time
-        print("system  delta: ", self.system_delta_time, " system  sum: ", self.system_sum_time)
+        print("system  delta: ", int(self.system_delta_time), "sec    system  sum: ", int(self.system_sum_time), ' sec')
 
         if self.state_1_on:
             self.door_outside_time_closed = time.time()
@@ -173,7 +174,6 @@ class MyRevPiOpcuaServerApp:
             self.door_inside_delta_time_open = self.door_inside_time_closed - self.door_inside_time_opened
             self.door_inside_sum_time_open = self.door_inside_sum_time_open + self.door_inside_delta_time_open
         self.trigger = self.trigger_system_off_trigger
-        # self.update_opc()
 
     def event_switch_1_on(self, ioname, iovalue):
         """Called if I_3 goes to True."""
@@ -181,20 +181,21 @@ class MyRevPiOpcuaServerApp:
             self.rpi.io.relay_1.value = True
             self.state_1_on = True
             self.door_outside_time_opened = time.time()
-        self.trigger = self.trigger_door_outside_open
-        # self.update_opc()
+            self.trigger = self.trigger_door_outside_open
 
     def event_switch_1_off(self, ioname, iovalue):
         """Called if I_3 goes to false."""
-        self.rpi.io.relay_1.value = False
-        self.state_1_on = False
-        self.door_count = self.door_count + 1
-        self.door_outside_time_closed = time.time()
-        self.door_outside_delta_time_open = self.door_outside_time_closed - self.door_outside_time_opened
-        self.door_outside_sum_time_open = self.door_outside_sum_time_open + self.door_outside_delta_time_open
-        print("outside delta: ", self.door_outside_delta_time_open, " outside sum: ", self.door_outside_sum_time_open)
-        self.trigger = self.trigger_door_outside_close
-        # self.update_opc
+        if self.main_state:
+            self.rpi.io.relay_1.value = False
+            self.state_1_on = False
+            self.door_count = self.door_count + 1
+            # self.door_outside_time_closed = time.time()
+            # self.door_outside_delta_time_open = self.door_outside_time_closed - self.door_outside_time_opened
+            # self.door_outside_sum_time_open = self.door_outside_sum_time_open + self.door_outside_delta_time_open
+            # print("outside delta: ", int(self.door_outside_delta_time_open),
+            #       "sec    outside sum: ", int(self.door_outside_sum_time_open), ' sec')
+            self.door_outside_sum_time_open = self.door_outside_sum_time_open + time.time() - self.door_outside_time_opened
+            self.trigger = self.trigger_door_outside_close
 
     def event_switch_2_on(self, ioname, iovalue):
         """Called if I_5 goes to True."""
@@ -202,20 +203,21 @@ class MyRevPiOpcuaServerApp:
             self.rpi.io.relay_2.value = True
             self.state_2_on = True
             self.door_inside_time_opened = time.time()
-        self.trigger = self.trigger_door_inside_open
-        # self.update_opc()
+            self.trigger = self.trigger_door_inside_open
 
     def event_switch_2_off(self, ioname, iovalue):
         """Called if I_5 goes to False."""
-        self.rpi.io.relay_2.value = False
-        self.state_2_on = False
-        self.door_count = self.door_count + 1
-        self.door_inside_time_closed = time.time()
-        self.door_inside_delta_time_open = self.door_inside_time_closed - self.door_inside_time_opened
-        self.door_inside_sum_time_open = self.door_inside_sum_time_open + self.door_inside_delta_time_open
-        print("inside  delta: ", self.door_inside_delta_time_open, " inside  sum: ", self.door_inside_sum_time_open)
-        self.trigger = self.trigger_door_inside_close
-        # self.update_opc()
+        if self.main_state:
+            self.rpi.io.relay_2.value = False
+            self.state_2_on = False
+            self.door_count = self.door_count + 1
+            # self.door_inside_time_closed = time.time()
+            # self.door_inside_delta_time_open = self.door_inside_time_closed - self.door_inside_time_opened
+            # self.door_inside_sum_time_open = self.door_inside_sum_time_open + self.door_inside_delta_time_open
+            # print("inside  delta: ", int(self.door_inside_delta_time_open),
+            #       "sec     inside  sum: ", int(self.door_inside_sum_time_open), ' sec')
+            self.door_inside_sum_time_open = self.door_inside_sum_time_open + time.time() - self.door_inside_time_opened
+            self.trigger = self.trigger_door_inside_close
 
     def start(self):
         """Start event system and own cyclic loop."""
@@ -238,12 +240,21 @@ class MyRevPiOpcuaServerApp:
             if self.trigger == self.trigger_door_inside_open or self.trigger == self.trigger_door_inside_close:
                 self.opc_door_inside.set_value(self.state_2_on)
 
+            # needed to update system on time while no event takes place
+            if self.main_state:
+                self.system_delta_time = time.time() - self.system_on_time
+                self.system_running_time = self.system_sum_time + self.system_delta_time
+            else:
+                self.system_running_time = self.system_sum_time
+
             self.door_open_time = self.door_outside_sum_time_open + self.door_inside_sum_time_open
-            if self.system_sum_time == 0.0:  # if 0 then main has not been switched on yet
+
+            if self.system_running_time == 0.0:  # if 0 then main has not been switched on yet
                 self.open_percentage = 0
             else:
-                self.open_percentage = (self.door_open_time / self.system_sum_time) * 100
-            print("door open time: ", self.door_open_time, " system on time: ", self.system_sum_time)
+                self.open_percentage = (self.door_open_time / self.system_running_time) * 100
+            # print("door open time: ", int(self.door_open_time),
+            #       " system on time: ", int(self.system_running_time), ' sec')
 
             if self.door_open_time == 0.0:  # if 0 then main has not been switched on yet
                 self.door_outside_share_percentage = 50  # if 0, avoid DIV by Zero, and start at 50/50%

@@ -95,8 +95,9 @@ class MyRevPiApp:
 
     def event_switch_1_off(self, ioname, iovalue):
         """Called if I_3 goes to false."""
-        self.rpi.io.relay_1.value = False
-        self.state_1_on = False
+        if self.main_state:
+            self.rpi.io.relay_1.value = False
+            self.state_1_on = False
 
     def event_switch_2_on(self, ioname, iovalue):
         """Called if I_5 goes to True."""
@@ -106,8 +107,9 @@ class MyRevPiApp:
 
     def event_switch_2_off(self, ioname, iovalue):
         """Called if I_5 goes to False."""
-        self.rpi.io.relay_2.value = False
-        self.state_2_on = False
+        if self.main_state:
+            self.rpi.io.relay_2.value = False
+            self.state_2_on = False
 
     def start(self):
         """Start event system and own cyclic loop."""
@@ -123,6 +125,7 @@ class MyRevPiApp:
             self.rpi.core.a1green.value = not self.rpi.core.a1green.value
             if self.main_state:
                 self.rpi.core.a2red.value = not self.rpi.core.a2red.value
+
 
 if __name__ == "__main__":
     root = MyRevPiApp()

@@ -291,7 +291,7 @@ def on_message(client, userdata, message):
 
 if __name__ == '__main__':
 
-    broker = "10.0.0.4"
+    broker = "10.0.0.3"
     # TODO put broker IP in program entry
     port = 1883
     logging.basicConfig(level=logging.INFO)

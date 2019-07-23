@@ -56,10 +56,13 @@ def main():
             print("can't open door 1: check if door 2 is open, then close first door 2, else check if system is ON")
 
     def event_switch_1_off(ioname, iovalue):
-        global state_1
-        rpi.io.relay_1.value = False
-        state_1 = False
-        print("door 1 = closed")
+        global main_state, state_1
+        if main_state:
+            rpi.io.relay_1.value = False
+            state_1 = False
+            print("door 1 = closed")
+        else:
+            print("ha, your switched off switch_1 while main_switch was off - nothing will happen")
 
     def event_switch_2_on(ioname, iovalue):
         global main_state, state_1, state_2
@@ -71,10 +74,13 @@ def main():
             print("can't open door 2: check if door 1 is open, then close first door 1, else check if system is ON")
 
     def event_switch_2_off(ioname, iovalue):
-        global state_2
-        rpi.io.relay_2.value = False
-        state_2 = False
-        print("door 2 = closed")
+        global main_state, state_2
+        if main_state:
+            rpi.io.relay_2.value = False
+            state_2 = False
+            print("door 2 = closed")
+        else:
+            print("ha, your switched off switch_2 while main_switch was off - nothing will happen")
 
     # Register event to main_switch, switch_1 and switch_2
     rpi.io.main_switch.reg_event(event_main_on, edge=revpimodio2.RISING)

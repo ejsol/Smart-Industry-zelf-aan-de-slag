@@ -51,9 +51,10 @@ def main():
             state_1 = True
 
     def event_switch_1_off(ioname, iovalue):
-        global state_1
-        rpi.io.relay_1.value = False
-        state_1 = False
+        global main_state, state_1
+        if main_state:
+            rpi.io.relay_1.value = False
+            state_1 = False
 
     def event_switch_2_on(ioname, iovalue):
         global main_state, state_1, state_2
@@ -62,9 +63,10 @@ def main():
             state_2 = True
 
     def event_switch_2_off(ioname, iovalue):
-        global state_2
-        rpi.io.relay_2.value = False
-        state_2 = False
+        global main_state, state_2
+        if main_state:
+            rpi.io.relay_2.value = False
+            state_2 = False
 
     # Register event to main_switch, switch_1 and switch_2
     rpi.io.main_switch.reg_event(event_main_on, edge=revpimodio2.RISING)

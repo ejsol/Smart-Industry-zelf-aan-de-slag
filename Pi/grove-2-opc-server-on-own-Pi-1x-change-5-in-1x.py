@@ -108,10 +108,12 @@ class MyGroveOpcTerminalApp:
         self.opc_server = Server()
         self.opc_url = "opc.tcp://10.0.0.5:4840"
         self.opc_server.set_endpoint(self.opc_url)
+
         print('starting OPC server ..')
         self.opc_name = "Grove-opcua-server"
         self.addspace = self.opc_server.register_namespace(self.opc_name)
         print('starting OPC server ...')
+
         self.opc_node = self.opc_server.get_objects_node()
         self.param = self.opc_node.add_object(self.addspace, "Parameters")
 
