@@ -127,7 +127,6 @@ class MyRevPiOpcuaServerApp:
         self.opc_open_percentage.set_writable()
         self.opc_door_outside_share_percentage.set_writable()
 
-        print('starting OPC server .....')
         self.opc_server.start()
         print("OPC UA Server started at {}".format(self.opc_url))
 
