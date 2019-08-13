@@ -101,7 +101,7 @@ class MyRevPiOpcuaServerApp:
         self.rpi.io.relay_1.value = False      # O 3
         self.rpi.io.relay_2.value = False      # O 5
 
-        print('starting OPC server on core-1. (url 10.0.0.2:4840)')
+        print('starting OPC server on core-1: (url 10.0.0.2:4840)')
         self.opc_server = Server()
         self.opc_url = "opc.tcp://10.0.0.2:4840"
         self.opc_server.set_endpoint(self.opc_url)
