@@ -11,7 +11,7 @@ url = "opc.tcp://10.0.0.2:4840"
 client = Client(url)
 
 client.connect()
-print("Client is connected")
+print("Client is connected ")
 print(" ")
 print(" log file with data for database storage")
 

@@ -106,7 +106,7 @@ class MyRevPiOpcuaServerApp:
         self.opc_url = "opc.tcp://192.168.0.3:4840"
         self.opc_server.set_endpoint(self.opc_url)
         # TODO security
-        print('starting OPC server .. (namespace)')
+        print('starting OPC server ..  (namespace)')
         self.opc_name = "RevPi-opcua-server"
         self.addspace = self.opc_server.register_namespace(self.opc_name)
         print('starting OPC server ... (variables)')
