@@ -123,8 +123,11 @@ class MyRevPiApp:
 
             # Switch on / off green part of LED A1 to signal to user that PLC runs
             self.rpi.core.a1green.value = not self.rpi.core.a1green.value
-            if self.main_state:
-                self.rpi.core.a2red.value = not self.rpi.core.a2red.value
+            if self.main_state:  # if main_state is on flip-flop between a1 green and a2 red
+                if self.rpi.core.a1green.value:
+                    self.rpi.core.a2red.value = True
+                else:
+                    self.rpi.core.a2red.value = False
 
 
 if __name__ == "__main__":
