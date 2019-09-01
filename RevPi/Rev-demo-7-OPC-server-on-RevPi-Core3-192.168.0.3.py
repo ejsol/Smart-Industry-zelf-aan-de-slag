@@ -51,11 +51,11 @@ class MyRevPiOpcuaServerApp:
         self.trigger_door_inside_open = 5
         self.trigger_door_inside_close = 6
 
-        self.system_on_time = 0.0
-        self.system_off_time = 0.0
-        self.system_delta_time = 0.0
-        self.system_running_time = 0.0
-        self.system_sum_time = 0.0
+#        self.system_on_time = 0.0
+#        self.system_off_time = 0.0
+#        self.system_delta_time = 0.0
+#        self.system_running_time = 0.0
+        self.system_sum_time = 0
         self.door_count = 0
         self.door_outside_time_opened = 0.0
         self.door_outside_time_closed = 0.0
