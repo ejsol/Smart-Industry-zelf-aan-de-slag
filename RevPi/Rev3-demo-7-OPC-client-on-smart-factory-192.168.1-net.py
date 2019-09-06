@@ -6,7 +6,7 @@
 from opcua import Client
 import time
 
-url = "opc.tcp://192.168.0.3:4840"
+url = "opc.tcp://192.168.1.3:4840"
 
 client = Client(url)
 
