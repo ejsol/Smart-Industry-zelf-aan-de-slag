@@ -5,10 +5,16 @@
 #
 # app running control I/O for doors and collecting temperature data,
 # start from command line and use from other computer opc client to read data from this opc server
+#
+# the source is for the Pi-4 (10.0.0.4) with three sensors,
+# in this version the outside temperature and air quality are not used
+# as it is meant for the instruction Pi-11 Pi-16 with only digital I/O and 1 high accuracy temperature sensor
+#
+# for the instruction Pi you need to change in line 115 the IP number from 10.0.0.4 to 10.0.0.1x with 1<x<6
 
 import time
 import datetime
-# import tkinter as tk
+
 from opcua import ua, uamethod, Server
 from grove.button import Button
 from grove.factory import Factory
@@ -26,17 +32,6 @@ class GroveRelay(GPIO):
 
     def off(self):
         self.write(0)
-
-
-class GroveAirQualitySensor:
-    def __init__(self, channel):
-        self.channel = channel
-        self.adc = ADC()
-
-    @property
-    def value(self):
-        return self.adc.read(self.channel)
-
 
 class GroveLedButton(object):
     def __init__(self, pin):
@@ -96,13 +91,6 @@ class MyGroveOpcTerminalApp:
 
         self.temperature_warehouse = Factory.getTemper("MCP9808-I2C")
         self.temperature_warehouse.resolution(Temper.RES_1_16_CELSIUS)
-        self.temperature_outdoor = Factory.getTemper("NTC-ADC", 2)
-        # 2 implies on the grove base hat board port A2, top row, last port)
-        self.warehouse_air_quality = GroveAirQualitySensor(6)
-        # 6 implies on the grove base hat board port A6, middle row, last port
-        # print('{} Celsius warehouse temperature'.format(self.temperature_warehouse.temperature))
-        # print('{} Celsius outside temperature'.format(int(self.temperature_outdoor.temperature)))
-        # print('{} Air Quality (carbon monoxide & other gasses'.format(self.warehouse_air_quality.value))
 
         print('starting OPC server ')
         self.opc_server = Server()
@@ -118,22 +106,18 @@ class MyGroveOpcTerminalApp:
         self.param = self.opc_node.add_object(self.addspace, "Parameters")
 
         self.opc_time = self.param.add_variable(self.addspace, "Time", 0)
-        self.opc_temperature_w = self.param.add_variable(self.addspace, "Temperature warehouse", 0.0)
-        self.opc_temperature_o = self.param.add_variable(self.addspace, "Temperature outdoor", 0.0)
-        self.opc_warehouse_air = self.param.add_variable(self.addspace, "Warehouse air", 0.0)
         self.opc_trigger = self.param.add_variable(self.addspace, "Trigger", 0)
         self.opc_warehouse_state = self.param.add_variable(self.addspace, "Warehouse state", 0)
         self.opc_door_outside = self.param.add_variable(self.addspace, "Outside door", 0)
         self.opc_door_inside = self.param.add_variable(self.addspace, "Inside door", 0)
+        self.opc_temperature_w = self.param.add_variable(self.addspace, "Temperature warehouse", 0.0)
 
         self.opc_time.set_writable()
-        self.opc_temperature_w.set_writable()
-        self.opc_temperature_o.set_writable()
-        self.opc_warehouse_air.set_writable()
         self.opc_trigger.set_writable()
         self.opc_warehouse_state.set_writable()
         self.opc_door_outside.set_writable()
         self.opc_door_inside.set_writable()
+        self.opc_temperature_w.set_writable()
 
         print('starting OPC server .....')
         self.opc_server.start()
@@ -155,10 +139,6 @@ class MyGroveOpcTerminalApp:
         self.opc_time.set_value(datetime.datetime.now())
         self.opc_temperature_w.set_value(self.temperature_warehouse.temperature)
         print('{} temperature warehouse'.format(self.temperature_warehouse.temperature))
-        self.opc_temperature_o.set_value(int(self.temperature_outdoor.temperature))
-        print('{} temperature outdoor'.format(int(self.temperature_outdoor.temperature)))
-        self.opc_warehouse_air.set_value(self.warehouse_air_quality.value)
-        print('{} warehouse air quality'.format(self.warehouse_air_quality.value))
         self.opc_trigger.set_value(trigger)
         self.opc_warehouse_state.set_value(self.warehouse_state)
         self.opc_door_outside.set_value(self.door_outside_state)
