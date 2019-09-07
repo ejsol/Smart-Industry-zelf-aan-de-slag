@@ -10,7 +10,9 @@
 # in this version the outside temperature and air quality are not used
 # as it is meant for the instruction Pi-11 Pi-16 with only digital I/O and 1 high accuracy temperature sensor
 #
-# for the instruction Pi you need to change in line 115 the IP number from 10.0.0.4 to 10.0.0.1x with 1<x<6
+# for the instruction Pi you need to change in line 99 the IP number from 10.0.0.4 to 10.0.0.1x with 1<x<6
+# and if Pi is behind firewall then call as client 10.0.0.253:54844 in case of Pi-4 (of else 54840+1x)
+# and switch comment at line 99 en 100
 
 import time
 import datetime
@@ -95,6 +97,7 @@ class MyGroveOpcTerminalApp:
         print('starting OPC server ')
         self.opc_server = Server()
         self.opc_url = "opc.tcp://10.0.0.4:4840"
+        # self.opc_url = "opc.tcp://10.0.0.253:54844"  # if DSTNAT to 192.168.0.4:4840
         self.opc_server.set_endpoint(self.opc_url)
 
         print('starting OPC server ..')

@@ -7,12 +7,14 @@
 # in this version for the instruction Pi-11 till Pi-16 the outside temperature and air quality are not used
 # as the Pi-11 Pi-16 have only digital I/O and 1 high accuracy temperature sensor
 #
-# for the instruction Pi you need to change in line 15 the IP number from 10.0.0.4 to 10.0.0.1x with 1<x<6
+# for the instruction Pi you need to change in line 16 the IP number from 10.0.0.4 to 10.0.0.1x with 1<x<6
+# and if Pi is behind firewall then call 10.0.0.253:54844 in case of Pi-4 (of else 54840+1x)
 
 from opcua import Client
 import time
 
 url = "opc.tcp://10.0.0.4:4840"
+# url ="opc.tcp://10.0.0.253:54844   # which is translated into 192.168.0.4:4840 by the firewall/router DSTNAT
 
 client = Client(url)
 
