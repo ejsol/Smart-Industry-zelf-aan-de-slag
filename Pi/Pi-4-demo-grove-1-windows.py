@@ -5,7 +5,7 @@
 #
 # standalone, start from windows environment, with full user interface to control doors and update temperature
 # and control the doors with I/O too and log the accurate warehouse temperature and stop button in user interface
-# TODO button in windows with temperature and air quality updates
+# TODO button in windows with temperature and air quality updates, now untested print statement
 
 import time
 import tkinter as tk    # conflict with Button
@@ -108,6 +108,7 @@ class MyGroveStandAloneApp(tk.Frame):
 
         self.sensor_air = GroveAirQualitySensor(4)
         print('{} Air Quality'.format(self.sensor_air.value))
+        print('Temp (C) outside  warehouse Airquality')
 
         # Handle tkinter part
         super().__init__(master)
@@ -241,6 +242,7 @@ class MyGroveStandAloneApp(tk.Frame):
             self.btn_warehouse_on.config(bg='#00CC00', fg='white')
             self.lbl_state_main.config(bg='#00CC00', text="ON")
             self.btn_warehouse_off.config(bg='white', fg='black')
+        print(self.sensor_o.temperature, self.sensor_w.temperature, self.sensor_air.value)
 
     def on_press_door_outside(self):
         if self.warehouse_state:
@@ -268,6 +270,7 @@ class MyGroveStandAloneApp(tk.Frame):
                     self.btn_door_outside_close.config(bg='white', fg='black')
 
                     self.door_time = time.time()
+        print(self.sensor_o.temperature, self.sensor_w.temperature, self.sensor_air.value)
 
     def on_press_door_inside(self):
         if self.warehouse_state:
@@ -295,6 +298,7 @@ class MyGroveStandAloneApp(tk.Frame):
                     self.btn_door_inside_close.config(bg='white', fg='black')
 
                     self.door_time = time.time()
+        print(self.sensor_o.temperature, self.sensor_w.temperature, self.sensor_air.value)
 
 
 if __name__ == '__main__':
