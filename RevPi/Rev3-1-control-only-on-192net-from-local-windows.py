@@ -3,7 +3,7 @@
 #
 # (c) EJSol 1 jul 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
 #
-# to be run from the windows user-interface on RevPi with: python3 Rev-demo-1-control-only-on-RevPi.py
+# to be run from the windows user-interface on RevPi with: python3 Rev3-1-control-only-on-192net-from-local-windows.py
 # or if made executable (chmod +x Rev...) with: ./Rev-...
 # only run this file after the RevPi has been put in WINDOWS mode (after a: startx)
 # do not run it from remote RevPiPyControl if Rev-2 is in CLI mode (the normal mode)
