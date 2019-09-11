@@ -96,7 +96,7 @@ class MyGroveOpcTerminalApp:
 
         print('starting OPC server ')
         self.opc_server = Server()
-        self.opc_url = "opc.tcp://10.0.0.4:4840"
+        self.opc_url = "opc.tcp://0.0.0.0:4840"
         # self.opc_url = "opc.tcp://10.0.0.253:54844"  # if DSTNAT to 192.168.0.4:4840
         self.opc_server.set_endpoint(self.opc_url)
 
