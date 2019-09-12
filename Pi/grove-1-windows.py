@@ -6,7 +6,6 @@
 # standalone, start from windows environment, with full user interface to control doors and update temperature
 # and control the doors with I/O too and log the accurate warehouse temperature and stop button in user interface
 # this version -1x- is a little different in amount of grove sensors (only one high accuracy temperature, not three)
-# TODO show temperature values in the tkinter windows box
 
 import time
 import tkinter as tk    # conflict with Button
@@ -188,7 +187,10 @@ class MyGroveStandAloneApp(tk.Frame):
 
         self.btn_stop = tk.Button(self.master, text="Stop")
         self.btn_stop["command"] = self.close_app
-        self.btn_stop.grid(row=4, column=3)
+        self.btn_stop.grid(row=4, column=0)
+
+        self.lbl_temperature = tk.Button(self.master, text="temperature")
+        self.lbl_temperature.grid(row=3, column=3)
 
     def close_app(self):
         self.warehouse_relay.off()
@@ -244,6 +246,7 @@ class MyGroveStandAloneApp(tk.Frame):
             self.btn_warehouse_on.config(bg='#00CC00', fg='white')
             self.lbl_state_main.config(bg='#00CC00', text="ON")
             self.btn_warehouse_off.config(bg='white', fg='black')
+        self.lbl_temperature.config(text="Temp. (C): " + str(self.sensor_w.temperature))
 
     def on_press_door_outside(self):
         if self.warehouse_state:
@@ -271,6 +274,7 @@ class MyGroveStandAloneApp(tk.Frame):
                     self.btn_door_outside_close.config(bg='white', fg='black')
 
                     self.door_time = time.time()
+        self.lbl_temperature.config(text="Temp. (C): " + str(self.sensor_w.temperature))
 
     def on_press_door_inside(self):
         if self.warehouse_state:
@@ -298,7 +302,7 @@ class MyGroveStandAloneApp(tk.Frame):
                     self.btn_door_inside_close.config(bg='white', fg='black')
 
                     self.door_time = time.time()
-
+        self.lbl_temperature.config(text="Temp. (C): " + str(self.sensor_w.temperature))
 
 if __name__ == '__main__':
     root = tk.Tk()
