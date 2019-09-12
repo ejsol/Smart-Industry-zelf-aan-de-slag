@@ -138,6 +138,9 @@ class MyGroveOpcTerminalApp:
         print('starting OPC server .....')
         self.opc_server.start()
         print("OPC UA Server started at {}".format(self.opc_url))
+        print()
+        print("                                                   T = temperature Celsius")
+        print("trigger  warehouse outside-door  inside-door Q-air  T-outdoor  T-warehouse")
 
     def closeapp(self):
         self.warehouse_relay.off()
@@ -154,15 +157,15 @@ class MyGroveOpcTerminalApp:
     def update_opc(self, trigger):
         self.opc_time.set_value(datetime.datetime.now())
         self.opc_temperature_w.set_value(self.temperature_warehouse.temperature)
-        print('{} temperature warehouse'.format(self.temperature_warehouse.temperature))
         self.opc_temperature_o.set_value(int(self.temperature_outdoor.temperature))
-        print('{} temperature outdoor'.format(int(self.temperature_outdoor.temperature)))
         self.opc_warehouse_air.set_value(self.warehouse_air_quality.value)
-        print('{} warehouse air quality'.format(self.warehouse_air_quality.value))
         self.opc_trigger.set_value(trigger)
         self.opc_warehouse_state.set_value(self.warehouse_state)
         self.opc_door_outside.set_value(self.door_outside_state)
         self.opc_door_inside.set_value(self.door_inside_state)
+        print(trigger, "       ", int(self.warehouse_state), "          ", int(self.door_outside_state), "         ",
+            int(self.door_inside_state), "        ", self.warehouse_air_quality.value, "  ",
+              int(self.temperature_outdoor.temperature), "      ", self.temperature_warehouse.temperature)
 
     def on_press_main(self):
         if self.warehouse_state:

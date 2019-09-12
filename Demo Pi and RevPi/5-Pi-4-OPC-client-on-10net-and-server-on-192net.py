@@ -3,19 +3,18 @@
 #
 # (c) EJSol 11 sept 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
 #
-# access 192.168.0.4 via router on 10.0.0.254 met destination NAT from 54840 to 4840
+# access 192.168.0.4 via router on 10.0.0.254 met destination NAT from 54844 to 4840
 
 from opcua import Client
 import time
 
 
-url = "opc.tcp://10.0.0.4:4840"
+url = "opc.tcp://10.0.0.254:54844"
 
 client = Client(url)
 
 client.connect()
 print("Client is connected")
-
 
 print("                                                                            T = temperature Celsius")
 print("time                     trigger  warehouse outside-door  inside-door Q-air  T-outdoor  T-warehouse")
@@ -31,11 +30,11 @@ while True:
         warehouse_state = client.get_node("ns=2;i=7")
         door_outside = client.get_node("ns=2;i=8")
         door_inside = client.get_node("ns=2;i=9")
-
         print(temperature_time.get_value(), "  ", trigger.get_value(), "  ",
               int(warehouse_state.get_value()), "          ", int(door_outside.get_value()), "         ",
             int(door_inside.get_value()), "        ", warehouse_air.get_value(), "  ",
             temperature_outdoor.get_value(), "      ", temperature_warehouse.get_value())
+
         time.sleep(5)
     except KeyboardInterrupt:
         client.disconnect()

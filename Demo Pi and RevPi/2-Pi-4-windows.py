@@ -108,7 +108,7 @@ class MyGroveStandAloneApp(tk.Frame):
 
         self.sensor_air = GroveAirQualitySensor(6)
         print('{} Air Quality'.format(self.sensor_air.value))
-        print('Air Qual. Temp (C) outside  warehouse')
+        print('Air Qual. Outside Inside Warehouse Temp (C)')
 
         # Handle tkinter part
         super().__init__(master)
@@ -242,7 +242,7 @@ class MyGroveStandAloneApp(tk.Frame):
             self.btn_warehouse_on.config(bg='#00CC00', fg='white')
             self.lbl_state_main.config(bg='#00CC00', text="ON")
             self.btn_warehouse_off.config(bg='white', fg='black')
-        print(self.sensor_air.value, int(self.sensor_w.temperature), self.sensor_o.temperature)
+        print(self.sensor_air.value, '         ', int(self.sensor_w.temperature), '       ', self.sensor_o.temperature)
 
     def on_press_door_outside(self):
         if self.warehouse_state:
@@ -270,7 +270,7 @@ class MyGroveStandAloneApp(tk.Frame):
                     self.btn_door_outside_close.config(bg='white', fg='black')
 
                     self.door_time = time.time()
-        print(self.sensor_air.value, int(self.sensor_w.temperature), self.sensor_o.temperature)
+        print(self.sensor_air.value, '         ', int(self.sensor_w.temperature), '       ', self.sensor_o.temperature)
 
     def on_press_door_inside(self):
         if self.warehouse_state:
@@ -298,7 +298,7 @@ class MyGroveStandAloneApp(tk.Frame):
                     self.btn_door_inside_close.config(bg='white', fg='black')
 
                     self.door_time = time.time()
-        print(self.sensor_air.value, int(self.sensor_w.temperature), self.sensor_o.temperature)
+        print(self.sensor_air.value, '         ', int(self.sensor_w.temperature), '       ', self.sensor_o.temperature)
 
 
 

@@ -19,16 +19,19 @@ Grove air quality sensor v1.3 on port A6
 3 x Grove LED button on D5, D16 and D18 ports of the Base Hat (input button, output LED)
 3 x Grove Relay on D22, D24 and D26 (outputs)
 
-IP nr
+1- and 2- are demo of Grove use only, with 1- only in terminal command line mode, physicals button works, but not screen
+and where 2- show the dashboard such that button physical and on screen works.
+
+3- OPC server
+normally the Pi-4 is wired on the shielded smart-factory 192.168.0.0/24, 192-network at IP nr 192.168.0.4
 on the 10.0.0.0/24 smart-engineering network, the Pi-4 can have a DHCP address (any addresses), but we prefer 10.0.0.4.
 
-demo 4 is meant for OPC server + client on the 10-net, where demo 3 runs on the Pi-4 (server) and demo 4 on a PC (client)
+demo 4 is a PC running the OPC client and  demo 3 runs on the Pi-4 the OPC server.
+Both need to be wired to the router with an Ethernet cable
 
-for demo 5, the Pi-4 must move to the 192.168.0.0/24 smart-factory network, and where demo 3 runs on the Pi-4 in 192net
-and the demo 5 on a PC (client). In this network only wired connections can be used, so Pi-4 and the PC must be
-connected by wire to the router/firewall, hAP of an Ethernet hub connected to this router.
-
-for demo 6, the Pi-4 still in the 192net smart-factory network, is shielded by the router/firewall
+demo 5, the PC OPC client now runs in the 10-net, outside the shielded smart-factory network.
+Pi-4 must be on 192.168.0.0/24 smart-factory network at 192.168.0.4 wired and shielded by the router/firewall
 where the firewall dstnat (destination NAT) filter rules has to be hard programmed,
 the Pi-4 needs to have the IP nr 192.168.0.4 where OPC will be on port 4840 (part of the hard programmed dstnat rule)
-and demo 6 is run on a PC in the 10net smart-engineering addressing the WAN side of the router/firewall at 10.0.0.254
+and demo 5 is run on a PC in the 10net smart-engineering addressing the WAN side of the router/firewall at 10.0.0.254
+The dstnat setting to access the Pi-4 on port 4840 is 10.0.0.254:54844 (5 + 4840 + 4)

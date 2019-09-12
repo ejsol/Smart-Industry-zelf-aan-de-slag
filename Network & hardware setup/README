@@ -3,7 +3,7 @@ using the following addresses
 10.0.0.1 hAP router (during the session the WAN port ether1 is not connected to Internet)
 10.0.0.2 RevPi core 1
 10.0.0.3 reserved for RevPi core 3 (this RevPi now is located in the smart-factory network at 192.168.0.3)
-10.0.0.4 Pi-4 (demo Pi with 3 sensors)
+10.0.0.4 reserved for Pi-4 (demo Pi with 3 sensors)
 
 10.0.0.10 Pi-10 configuration Pi
 10.0.0.11-16 participants Pi's Pi-11 till Pi-16
@@ -15,14 +15,17 @@ using the following addresses
 The hAP router uses the standard Mikrotik router setting (firewall, etc,) with both the 2.4Ghz and the 5Ghz Wi-Fi 1-5
 activated. Next to Wi-Fi it has 1 WAN and 4 Giga Ethernet ports.
 
-The 192.168.0.0/24 network smart-factory is shielded by a tightly locked-down router with the following configuration
+
+The 192.168.0.0/24 network smart-factory is shielded by a tightly locked-down router, a Mikrotik hEX router
+with no wifi, only 4 Giga Ethernet ports (ether2-ether5) and the following configuration
 192.168.0.1 hEX router (no Wi-Fi)
 192.168.0.3 RevPi core 3 (Rev3)
-192.168.0.4 reserved for Pi-4
+192.168.0.4 Pi-4
 
 192.168.0.20-100 DHCP
 
-The hEX standard firewall rule set (RouterOS 6.45.3 model RB750Gr3) is replaced but the following setting
+The hEX router (RouterOS 6.45.3 model RB750Gr3)is connects on its WAN port (ether1) to the 10-net on fixed IP 10.0.0.254 and has its standard firewall
+ rule set replaced but the following setting
 (copy text and enter it as script in the Mikrotik router terminal interface)
 
 /ip firewall filter
