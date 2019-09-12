@@ -145,8 +145,8 @@ def main():
     while True:
         try:
             time.sleep(1)
-            print('Warehouse outside {} Celsius'.format(int(sensor_o.temperature)),
-                  ' inside {} Celsius'.format(sensor_w.temperature), 'air Q {} '.format(sensor_air.value))
+            print('air Q {} '.format(sensor_air.value), ' Temperature Warehouse (Celsius) outside {} '.format(int(sensor_o.temperature)),
+                  ' inside {} '.format(sensor_w.temperature))
         except KeyboardInterrupt:
             main_relay.off()
             door_1_relay.off()
