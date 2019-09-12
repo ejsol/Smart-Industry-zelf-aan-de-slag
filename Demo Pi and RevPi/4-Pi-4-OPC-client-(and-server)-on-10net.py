@@ -17,8 +17,8 @@ client.connect()
 print("Client is connected")
 
 
-print("                               quality T = temperature in Celsius")
-print("time                     trigger  warehouse-state outside-door  inside-door Q-air  T-outdoor  T-warehouse ")
+print("                                                                            T = temperature Celsius")
+print("time                     trigger  warehouse outside-door  inside-door Q-air  T-outdoor  T-warehouse")
 
 
 while True:
@@ -33,8 +33,8 @@ while True:
         door_inside = client.get_node("ns=2;i=9")
 
         print(temperature_time.get_value(), "  ", trigger.get_value(), "  ",
-            warehouse_state.get_value(), "          ", door_outside.get_value(), "         ",
-            door_inside.get_value(), " ", warehouse_air.get_value(), "  ",
+              int(warehouse_state.get_value()), "          ", int(door_outside.get_value()), "         ",
+            int(door_inside.get_value()), "        ", warehouse_air.get_value(), "  ",
             temperature_outdoor.get_value(), "      ", temperature_warehouse.get_value())
         time.sleep(5)
     except KeyboardInterrupt:
