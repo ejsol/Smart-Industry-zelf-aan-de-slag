@@ -1,0 +1,11 @@
+Hardware configuration of Pi-11 till Pi-16
+
+6 Pi with fixed IP nr 10.0.0.11 till 10.0.0.16
+
+Pi 3 Model B+ (but and Model B would do)
+
+Grove Base Hat for Raspberry Pi
+Grove high accuracy temperature sensor on I2C port
+3 x Grove LED button on D5, D16 and D18 ports of the Base Hat (input button, output LED)
+3 x Grove Relay on D22, D24 and D26 (outputs)
+

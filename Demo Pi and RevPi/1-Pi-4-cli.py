@@ -92,8 +92,8 @@ def main():
 
     sensor_w = Factory.getTemper("MCP9808-I2C")
     sensor_w.resolution(Temper.RES_1_16_CELSIUS)
-    sensor_o = Factory.getTemper("NTC-ADC", 0)
-    sensor_air = GroveAirQualitySensor(4)
+    sensor_o = Factory.getTemper("NTC-ADC", 2)
+    sensor_air = GroveAirQualitySensor(6)
 
     def on_press_main():
         global main_state, door_1_state, door_2_state

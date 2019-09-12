@@ -1,0 +1,23 @@
+/ip firewall filter
+add action=drop chain=input comment="drop invalid to firewall router at 192.168.0.1/24" connection-state=invalid
+add action=accept chain=input comment="allow established connections to firewall router " connection-state=established
+add action=accept chain=input comment="allow connection to firewall router from local network \
+  (ether2-5 as ether1 is WAN)" in-interface=!ether1 src-address=192.168.0.0/24
+add action=drop chain=input comment="drop all to firewall router not coming from LAN (also no icmp)" in-interface=ether1
+
+add action=drop chain=forward comment="defconf: drop invalid" connection-state=invalid
+add action=accept chain=forward comment="accept established and related" connection-state=established,related
+add action=drop chain=forward comment="defconf:  drop all from WAN not DSTNATed" connection-nat-state=!dstnat \
+    connection-state=new in-interface-list=WAN
+add action=drop chain=forward comment="drop everything else " disabled=yes
+
+/ip firewall nat
+add action=masquerade chain=srcnat comment="defconf: masquerade" disabled=yes ipsec-policy=out,none out-interface-list=WAN
+add action=dst-nat chain=dstnat dst-address=10.0.0.254 dst-port=54843 log=yes protocol=tcp to-addresses=192.168.0.3 to-ports=4840
+add action=dst-nat chain=dstnat dst-address=10.0.0.254 dst-port=54844 log=yes protocol=tcp to-addresses=192.168.0.4 to-ports=4840
+
+/ip firewall service-port
+set ftp disabled=yes
+set irc disabled=yes
+set h323 disabled=yes
+set sip disabled=yes

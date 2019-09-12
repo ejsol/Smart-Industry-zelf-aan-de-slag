@@ -101,12 +101,12 @@ class MyGroveStandAloneApp(tk.Frame):
         self.door_inside_relay = GroveRelay(26)
 
         self.sensor_w = Factory.getTemper("MCP9808-I2C")
-        self.sensor_o = Factory.getTemper("NTC-ADC", 0)
+        self.sensor_o = Factory.getTemper("NTC-ADC", 2)
         self.sensor_w.resolution(Temper.RES_1_16_CELSIUS)
         print('{} Celsius warehouse temperature'.format(self.sensor_w.temperature))
         print('{} Celsius outside temperature'.format(int(self.sensor_o.temperature)))
 
-        self.sensor_air = GroveAirQualitySensor(4)
+        self.sensor_air = GroveAirQualitySensor(6)
         print('{} Air Quality'.format(self.sensor_air.value))
         print('Temp (C) outside  warehouse Airquality')
 

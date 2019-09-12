@@ -1,0 +1,34 @@
+Demo Pi
+
+The Pi-4 used for demo has two more sensors then the Pi's used in the training.
+The Pi-11 till Pi-16 in the training have only a Groove high accuracy temperature sensor. Whereas the Pi-4
+has next to the high accu temp sensor (two digits) also a very simple temperature sensor (zero digit) and
+an air quality sensor.
+
+The Demo Pi software differentiates for the Pi software as it reports more values in OPC-server
+and show more in the client version.
+
+Hardware configuration of Pi-4:
+
+Pi 4 Model B (but and Model B would do)
+
+Grove Base Hat for Raspberry Pi
+Grove high accuracy temperature sensor on I2C port
+Grove temperature sensor on port A2
+Grove air quality sensor v1.3 on port A6
+3 x Grove LED button on D5, D16 and D18 ports of the Base Hat (input button, output LED)
+3 x Grove Relay on D22, D24 and D26 (outputs)
+
+IP nr
+on the 10.0.0.0/24 smart-engineering network, the Pi-4 can have a DHCP address (any addresses), but we prefer 10.0.0.4.
+
+demo 4 is meant for OPC server + client on the 10-net, where demo 3 runs on the Pi-4 (server) and demo 4 on a PC (client)
+
+for demo 5, the Pi-4 must move to the 192.168.0.0/24 smart-factory network, and where demo 3 runs on the Pi-4 in 192net
+and the demo 5 on a PC (client). In this network only wired connections can be used, so Pi-4 and the PC must be
+connected by wire to the router/firewall, hAP of an Ethernet hub connected to this router.
+
+for demo 6, the Pi-4 still in the 192net smart-factory network, is shielded by the router/firewall
+where the firewall dstnat (destination NAT) filter rules has to be hard programmed,
+the Pi-4 needs to have the IP nr 192.168.0.4 where OPC will be on port 4840 (part of the hard programmed dstnat rule)
+and demo 6 is run on a PC in the 10net smart-engineering addressing the WAN side of the router/firewall at 10.0.0.254
