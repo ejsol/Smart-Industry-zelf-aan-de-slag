@@ -13,8 +13,8 @@
 from opcua import Client
 import time
 
-url = "opc.tcp://10.0.0.10:4840"
-# url ="opc.tcp://10.0.0.254:54840+your pi nr, e.g. Pi-11 goes to 54851   # which is translated into 192.168.0.4:4840 by the firewall/router DSTNAT
+# YOU NEED CHANGE THE PI-1x 10.0.0.1x into 192.168.0.1x and wired your Pi-1x to the router with an Ethernet cable
+url ="opc.tcp://10.0.0.254:54850" # =54840 + your pi nr, e.g. Pi-11 goes to 54851   which is translated into 192.168.0.11:4840 by the firewall/router DSTNAT
 
 client = Client(url)
 
