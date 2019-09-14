@@ -9,3 +9,14 @@ Grove high accuracy temperature sensor on I2C port
 3 x Grove LED button on D5, D16 and D18 ports of the Base Hat (input button, output LED)
 3 x Grove Relay on D22, D24 and D26 (outputs)
 
+Software configuration
+pip3 install grove.py
+pip3 install upm
+sudo apt install python3-mraa python3-upm
+    (needed to move dist-packages in python3.4 to 3.7)
+pip3 install opcua
+pip3 install opcua-client --user
+pip3 install pyqtgraph
+
+you can run server (ocp.tcp://0.0.0.0:4840) on localhost
+and then in terminal mode: $opcua-client on same host with connect to localhost
