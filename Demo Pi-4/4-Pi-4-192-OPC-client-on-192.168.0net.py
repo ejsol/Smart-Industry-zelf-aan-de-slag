@@ -12,8 +12,8 @@ client = Client(url)
 
 client.connect()
 print("Client is connected")
-print("                                                                            T = temperature Celsius")
-print("time           trigger  warehouse outside-door  inside-door Q-air  T-outdoor  T-warehouse")
+print("                                                              T = temperature Celsius")
+print("time      trigger  warehouse outside-door  inside-door Q-air  T-outdoor  T-warehouse")
 
 while True:
     try:

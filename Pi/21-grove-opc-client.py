@@ -1,22 +1,23 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
-# (c) EJSol 8 jun 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
+# (c) EJSol 12 sept 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
 #
 # the source is for the Pi-4  with three sensors,
 # in this version for the instruction Pi-11 till Pi-16 the outside temperature and air quality are not used
 # as the Pi-11 Pi-16 have only digital I/O and 1 high accuracy temperature sensor
 #
 # for the instruction Pi you need to change in line 16 the IP number from 10.0.0.10 to 10.0.0.1x with 1<x<6
-# and if Pi is behind firewall then call 10.0.0.253:54844 in case of Pi-4 (of else 54840+1x)
+# and if Pi is behind firewall then call 10.0.0.254:54844 in case of Pi-4 (of else 54840+1x)
 
 from opcua import Client
 import time
 
-# YOU NEED CHANGE THE PI-1x 10.0.0.1x into 192.168.0.1x and wired your Pi-1x to the router with an Ethernet cable
-url = "opc.tcp://10.0.0.253:54850"
-# =54840 + your pi nr, e.g. Pi-11 goes to 54851
-# which is translated into 192.168.0.11:4840 by the firewall/router DSTNAT
+url = "opc.tcp://localhost:4840"
+# option 1: localhost if run on the Pi itself, you can write opc.tcp://localhost:4840"
+# option 2: 192-net url= "opc.tcp://192.168.0.4 if the Pi=192.168.0.4 and the client is on another node in 192.168.0.0/24
+# option 3: 10-net with firewall url ="opc.tcp://10.0.0.254:54840+your pi nr, e.g. Pi-11 goes to 54851
+# which is translated into 192.168.0.4:4840 by the firewall/router DSTNAT
 
 client = Client(url)
 
@@ -24,8 +25,8 @@ client.connect()
 print("Client is connected")
 
 
-print("                                                             T = temperature in Celsius")
-print("time                     trigger  warehouse-state outside-door  inside-door T-warehouse")
+print("                                             T = temperature in Celsius")
+print("time     trigger  warehouse-state outside-door  inside-door T-warehouse")
 
 
 while True:
