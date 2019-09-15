@@ -36,7 +36,7 @@ while True:
         door_inside = client.get_node("ns=2;i=6")
         temperature_warehouse = client.get_node("ns=2;i=7")
 
-        print(temperature_time.get_value(), "  ", trigger.get_value(), "     ",
+        print('{} '.format(temperature_time.get_value().strftime("%X")), "  ", trigger.get_value(), "     ",
             int(warehouse_state.get_value()), "          ", int(door_outside.get_value()), "           ",
             int(door_inside.get_value()),"         ", temperature_warehouse.get_value())
         time.sleep(5)

@@ -7,7 +7,7 @@
 # start from command line and use from other computer opc client to read data from this opc server
 
 import time
-import datetime
+from datetime import datetime
 # import tkinter as tk
 from opcua import ua, uamethod, Server
 from grove.button import Button
@@ -155,7 +155,8 @@ class MyGroveOpcTerminalApp:
         exit(1)
 
     def update_opc(self, trigger):
-        self.opc_time.set_value(datetime.datetime.now())
+        self.time_stamp = datetime.now()
+        self.opc_time.set_value(self.time_stamp)
         self.opc_temperature_w.set_value(self.temperature_warehouse.temperature)
         self.opc_temperature_o.set_value(int(self.temperature_outdoor.temperature))
         self.opc_warehouse_air.set_value(self.warehouse_air_quality.value)
@@ -163,9 +164,14 @@ class MyGroveOpcTerminalApp:
         self.opc_warehouse_state.set_value(self.warehouse_state)
         self.opc_door_outside.set_value(self.door_outside_state)
         self.opc_door_inside.set_value(self.door_inside_state)
-        print(trigger, "       ", int(self.warehouse_state), "          ", int(self.door_outside_state), "         ",
-            int(self.door_inside_state), "        ", self.warehouse_air_quality.value, "  ",
-              int(self.temperature_outdoor.temperature), "      ", self.temperature_warehouse.temperature)
+        print('{} '.format(self.time_stamp.strftime("%X")),
+              trigger, "       ",
+              int(self.warehouse_state), "          ",
+              int(self.door_outside_state), "         ",
+              int(self.door_inside_state), "        ",
+              self.warehouse_air_quality.value, "  ",
+              int(self.temperature_outdoor.temperature), "      ",
+              self.temperature_warehouse.temperature)
 
     def on_press_main(self):
         if self.warehouse_state:

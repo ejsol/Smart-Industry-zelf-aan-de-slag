@@ -7,6 +7,7 @@
 # start from command line, control the doors and log the accurate warehouse temperature
 
 import time
+from datetime import datetime
 from grove.button import Button
 from grove.factory import Factory
 from grove.temperature import Temper
@@ -141,12 +142,14 @@ def main():
     main_button.on_press = on_press_main
     door_1_button.on_press = on_press_1
     door_2_button.on_press = on_press_2
-
+    print('time      Air Q   (C) outdoor (C) warehouse temperatures')
     while True:
         try:
             time.sleep(1)
-            print('air Q {} '.format(sensor_air.value), ' Temperature Warehouse (Celsius) outside {} '.format(int(sensor_o.temperature)),
-                  ' inside {} '.format(sensor_w.temperature))
+            print('{} '.format(datetime.now().strftime("%X")),
+                  '{}    '.format(sensor_air.value),
+                  '{} '.format(int(sensor_o.temperature)),
+                  '{}'.format(sensor_w.temperature))
         except KeyboardInterrupt:
             main_relay.off()
             door_1_relay.off()

@@ -12,7 +12,7 @@
 #
 
 import time
-import datetime
+from datetime import datetime
 
 from opcua import ua, uamethod, Server
 from grove.button import Button
@@ -121,6 +121,7 @@ class MyGroveOpcTerminalApp:
         print('starting OPC server .....')
         self.opc_server.start()
         print("OPC UA Server started at {}".format(self.opc_url))
+        print("time    Celsius warehouse")
 
     def closeapp(self):
         self.warehouse_relay.off()
@@ -135,9 +136,10 @@ class MyGroveOpcTerminalApp:
         exit(1)
 
     def update_opc(self, trigger):
-        self.opc_time.set_value(datetime.datetime.now())
+        self.time_stamp = datetime.now()
+        self.opc_time.set_value(self.time_stamp)
         self.opc_temperature_w.set_value(self.temperature_warehouse.temperature)
-        print('{} temperature warehouse'.format(self.temperature_warehouse.temperature))
+        print('{} '.format(self.time_stamp.strftime("%X")), '{}'.format(self.temperature_warehouse.temperature))
         self.opc_trigger.set_value(trigger)
         self.opc_warehouse_state.set_value(self.warehouse_state)
         self.opc_door_outside.set_value(self.door_outside_state)

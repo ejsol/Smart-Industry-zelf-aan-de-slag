@@ -8,6 +8,7 @@
 # this version -1x- is a little different in amount of grove sensors (only one high accuracy temperature, not three)
 
 import time
+from datetime import datetime
 from grove.button import Button
 from grove.factory import Factory
 from grove.temperature import Temper
@@ -83,6 +84,8 @@ def main():
     sensor = Factory.getTemper("MCP9808-I2C")
     sensor.resolution(Temper.RES_1_16_CELSIUS)
 
+    print('Time Temperature (C)')
+
     def on_press_main():
         global main_state, door_1_state, door_2_state
         if main_state:
@@ -130,10 +133,11 @@ def main():
     door_1_button.on_press = on_press_1
     door_2_button.on_press = on_press_2
 
+
     while True:
         try:
             time.sleep(1)
-            print('{} Celsius'.format(sensor.temperature))
+            print('{} '.format(datetime.now().strftime("%X")), '{}'.format(sensor.temperature))
         except KeyboardInterrupt:
             main_relay.off()
             door_1_relay.off()
