@@ -51,8 +51,8 @@ class MyRevPiOpcuaServerApp:
         self.trigger_door_inside_open = 5
         self.trigger_door_inside_close = 6
 
-#        self.system_on_time = 0.0
-#        self.system_off_time = 0.0
+#        self.system_on_time
+#        self.system_off_time
 #        self.system_delta_time = 0.0
 #        self.system_running_time = 0.0
         self.system_sum_time = 0
@@ -194,7 +194,8 @@ class MyRevPiOpcuaServerApp:
             # self.door_outside_sum_time_open = self.door_outside_sum_time_open + self.door_outside_delta_time_open
             # print("outside delta: ", int(self.door_outside_delta_time_open),
             #       "sec    outside sum: ", int(self.door_outside_sum_time_open), ' sec')
-            self.door_outside_sum_time_open = self.door_outside_sum_time_open + time.time() - self.door_outside_time_opened
+            self.door_outside_sum_time_open = \
+                self.door_outside_sum_time_open + time.time() - self.door_outside_time_opened
             self.trigger = self.trigger_door_outside_close
 
     def event_switch_2_on(self, ioname, iovalue):

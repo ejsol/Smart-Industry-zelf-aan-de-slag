@@ -9,7 +9,7 @@
 import time
 from datetime import datetime
 # import tkinter as tk
-from opcua import ua, uamethod, Server
+from opcua import Server
 from grove.button import Button
 from grove.factory import Factory
 from grove.temperature import Temper
@@ -94,6 +94,7 @@ class MyGroveOpcTerminalApp:
         self.door_outside_relay = GroveRelay(26)
         self.door_inside_relay = GroveRelay(24)
 
+        self.time_stamp = datetime.now()
         self.temperature_warehouse = Factory.getTemper("MCP9808-I2C")
         self.temperature_warehouse.resolution(Temper.RES_1_16_CELSIUS)
         self.temperature_outdoor = Factory.getTemper("NTC-ADC", 2)

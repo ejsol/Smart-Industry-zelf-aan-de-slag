@@ -28,9 +28,9 @@ while True:
         door_inside = client.get_node("ns=2;i=6")
         open_percentage = client.get_node("ns=2;i=7")
         door_share_percentage = client.get_node("ns=2;i=8")
-        print(time_stamp.get_value(), "  ", trigger.get_value(), "  ", warehouse_state.get_value(), "      ",
-            door_outside.get_value(), "     ", door_inside.get_value(), " ",
-            int(open_percentage.get_value()), "  ", int(door_share_percentage.get_value()))
+        print('{} '.format(time_stamp.get_value().strftime("%X")), "  ", trigger.get_value(), "  ", warehouse_state.get_value(), "      ",
+              door_outside.get_value(), "     ", door_inside.get_value(), " ",
+              int(open_percentage.get_value()), "  ", int(door_share_percentage.get_value()))
         time.sleep(5)
     except KeyboardInterrupt:
         client.disconnect()

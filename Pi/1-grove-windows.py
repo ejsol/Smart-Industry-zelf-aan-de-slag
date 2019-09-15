@@ -304,6 +304,7 @@ class MyGroveStandAloneApp(tk.Frame):
                     self.door_time = time.time()
         self.lbl_temperature.config(text="Temp. (C): " + str(self.sensor_w.temperature))
 
+
 if __name__ == '__main__':
     root = tk.Tk()
     MyGroveStandAloneApp(root).mainloop()

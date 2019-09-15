@@ -27,8 +27,8 @@ while True:
         door_inside = client.get_node("ns=2;i=9")
         print('{} '.format(temperature_time.get_value().strftime("%X")), "  ", trigger.get_value(), "  ",
               int(warehouse_state.get_value()), "          ", int(door_outside.get_value()), "         ",
-            int(door_inside.get_value()), "        ", warehouse_air.get_value(), "  ",
-            temperature_outdoor.get_value(), "      ", temperature_warehouse.get_value())
+              int(door_inside.get_value()), "        ", warehouse_air.get_value(), "  ",
+              temperature_outdoor.get_value(), "      ", temperature_warehouse.get_value())
 
         time.sleep(5)
     except KeyboardInterrupt:

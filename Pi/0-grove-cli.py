@@ -133,7 +133,6 @@ def main():
     door_1_button.on_press = on_press_1
     door_2_button.on_press = on_press_2
 
-
     while True:
         try:
             time.sleep(1)

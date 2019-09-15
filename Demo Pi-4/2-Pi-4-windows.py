@@ -254,7 +254,7 @@ class MyGroveStandAloneApp(tk.Frame):
             self.btn_warehouse_on.config(bg='#00CC00', fg='white')
             self.lbl_state_main.config(bg='#00CC00', text="ON")
             self.btn_warehouse_off.config(bg='white', fg='black')
-        # print(self.sensor_air.value, '         ', int(self.sensor_w.temperature), '       ', self.sensor_o.temperature)
+        # print(self.sensor_air.value, '         ', int(self.sensor_w.temperature), '      ', self.sensor_o.temperature)
         self.lbl_airq.config(text="Air " + str(int(self.sensor_air.value)))
         self.lbl_o_temp.config(text="Outdoor temp.: " + str(int(self.sensor_o.temperature)))
         self.lbl_w_temp.config(text="Indoor (C): " + str(self.sensor_w.temperature))
@@ -285,7 +285,7 @@ class MyGroveStandAloneApp(tk.Frame):
                     self.btn_door_outside_close.config(bg='white', fg='black')
 
                     self.door_time = time.time()
-        # print(self.sensor_air.value, '         ', int(self.sensor_w.temperature), '       ', self.sensor_o.temperature)
+        # print(self.sensor_air.value, '         ', int(self.sensor_w.temperature), '      ', self.sensor_o.temperature)
         self.lbl_airq.config(text="Air " + str(int(self.sensor_air.value)))
         self.lbl_o_temp.config(text="Outdoor temp.: " + str(int(self.sensor_o.temperature)))
         self.lbl_w_temp.config(text="Indoor (C): " + str(self.sensor_w.temperature))
@@ -316,7 +316,7 @@ class MyGroveStandAloneApp(tk.Frame):
                     self.btn_door_inside_close.config(bg='white', fg='black')
 
                     self.door_time = time.time()
-        # print(self.sensor_air.value, '         ', int(self.sensor_w.temperature), '       ', self.sensor_o.temperature)
+        # print(self.sensor_air.value, '         ', int(self.sensor_w.temperature), '      ', self.sensor_o.temperature)
         self.lbl_airq.config(text="Air " + str(int(self.sensor_air.value)))
         self.lbl_o_temp.config(text="Outdoor temp.: " + str(int(self.sensor_o.temperature)))
         self.lbl_w_temp.config(text="Indoor (C): " + str(self.sensor_w.temperature))
