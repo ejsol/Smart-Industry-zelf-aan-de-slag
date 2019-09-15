@@ -93,7 +93,8 @@ class MyGroveOpcTerminalApp:
         self.temperature_warehouse.resolution(Temper.RES_1_16_CELSIUS)
 
         print('starting OPC server ')
-        self.opc_server = Server()
+        self.opc_server = Server(shelffile="/home/pi/grove-opc-server")
+        # shelffile is trick with freeopcua to speedup loading of xml object base
         self.opc_url = "opc.tcp://0.0.0.0:4840"
         self.opc_server.set_endpoint(self.opc_url)
 

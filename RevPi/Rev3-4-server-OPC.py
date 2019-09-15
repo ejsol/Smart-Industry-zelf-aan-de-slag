@@ -103,6 +103,7 @@ class MyRevPiOpcuaServerApp:
 
         print('starting OPC server on core-3: (url 0.0.0.0 (192.168.1.3 or 192.168.0.3 or 10.0.0.3 or 10.0.1.3):4840)')
         self.opc_server = Server(shelffile="/home/pi/RevPi-OPC-Server")
+        # shelffile is trick with freeopcua to speedup loading of xml object base
         self.opc_url = "opc.tcp://0.0.0.0:4840"
         self.opc_server.set_endpoint(self.opc_url)
         # TODO security
