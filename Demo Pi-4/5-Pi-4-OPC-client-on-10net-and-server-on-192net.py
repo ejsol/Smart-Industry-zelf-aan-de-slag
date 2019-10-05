@@ -8,17 +8,12 @@
 from opcua import Client
 import time
 
-
 url = "opc.tcp://10.0.0.254:54844"
-
 client = Client(url)
-
 client.connect()
 print("Client is connected")
-
 print("                                                               T = temperature Celsius")
 print("time       trigger  warehouse outside-door  inside-door Q-air  T-outdoor  T-warehouse")
-
 
 while True:
     try:

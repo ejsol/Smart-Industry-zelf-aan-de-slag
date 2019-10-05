@@ -20,14 +20,10 @@ url = "opc.tcp://localhost:4840"
 # which is translated into 192.168.0.4:4840 by the firewall/router DSTNAT
 
 client = Client(url)
-
 client.connect()
 print("Client is connected")
-
-
 print("                                             T = temperature in Celsius")
 print("time     trigger  warehouse-state outside-door  inside-door T-warehouse")
-
 
 while True:
     try:

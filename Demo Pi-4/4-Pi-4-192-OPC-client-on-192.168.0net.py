@@ -7,9 +7,7 @@ from opcua import Client
 import time
 
 url = "opc.tcp://192.168.0.4:4840"
-
 client = Client(url)
-
 client.connect()
 print("Client is connected")
 print("                                                              T = temperature Celsius")

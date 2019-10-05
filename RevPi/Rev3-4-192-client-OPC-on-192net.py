@@ -7,17 +7,13 @@ from opcua import Client
 import time
 
 url = "opc.tcp://192.168.0.3:4840"
-
 client = Client(url)
-
 client.connect()
 print("Client is connected ")
 print(" ")
 print(" log file with data for database storage")
-
 print("                               ")
 print("time stamp                trigger  system on out-door   in-door   open% out/in door%")
-
 
 while True:
     try:
