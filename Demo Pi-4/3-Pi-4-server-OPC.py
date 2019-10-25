@@ -218,7 +218,7 @@ class MyGroveOpcTerminalApp:
                     self.door_inside_button.led_on()
         self.update_opc(3)
 
-    # start functie is voor terminal-mode, niet voor windows mode
+    # start function is for terminal-mode, not usable in windows mode, there we use the widget.after method
     def start(self):
         """Start event system and own cyclic loop."""
 

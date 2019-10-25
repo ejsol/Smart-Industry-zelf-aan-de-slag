@@ -196,9 +196,18 @@ class MyGroveStandAloneApp(tk.Frame):
         self.lbl_w_temp = tk.Label(self.master, text="wareh. temp", width=15)
         self.lbl_w_temp.grid(row=3, column=4)
 
+        # to update temperature every 1 sec, 1000 millisec using the widget.after method
+        self.update_temp()
+
         self.btn_stop = tk.Button(self.master, text="Stop")
         self.btn_stop["command"] = self.close_app
         self.btn_stop.grid(row=4, column=0)
+
+    def update_temp(self):
+        self.lbl_airq.config(text="Air " + str(int(self.sensor_air.value)))
+        self.lbl_o_temp.config(text="Outdoor temp.: " + str(int(self.sensor_o.temperature)))
+        self.lbl_w_temp.config(text="Indoor (C): " + str(self.sensor_w.temperature))
+        self.after(1000, self.update_temp)
 
     def close_app(self):
         self.warehouse_relay.off()

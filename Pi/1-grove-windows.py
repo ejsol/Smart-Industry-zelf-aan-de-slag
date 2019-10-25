@@ -28,18 +28,6 @@ class GroveRelay(GPIO):
         self.write(0)
 
 
-'''
-class GroveAirQualitySensor:
-    def __init__(self, channel):
-        self.channel = channel
-        self.adc = ADC()
-
-    @property
-    def value(self):
-        return self.adc.read(self.channel)
-'''
-
-
 class GroveLedButton(object):
     def __init__(self, pin):
         # Low = pressed
@@ -103,13 +91,8 @@ class MyGroveStandAloneApp(tk.Frame):
         self.door_inside_relay = GroveRelay(24)
 
         self.sensor_w = Factory.getTemper("MCP9808-I2C")
-#        self.sensor_o = Factory.getTemper("NTC-ADC", 0)
         self.sensor_w.resolution(Temper.RES_1_16_CELSIUS)
         print('{} Celsius warehouse temperature'.format(self.sensor_w.temperature))
-#        print('{} Celsius outside temperature'.format(int(self.sensor_o.temperature)))
-
-#        self.sensor_air = GroveAirQualitySensor(4)
-#        print('{} Air Quality'.format(self.sensor_air.value))
 
         # Handle tkinter part
         super().__init__(master)
@@ -191,6 +174,12 @@ class MyGroveStandAloneApp(tk.Frame):
 
         self.lbl_temperature = tk.Button(self.master, text="temperature")
         self.lbl_temperature.grid(row=3, column=3)
+
+        self.update_temp()
+
+    def update_temp(self):
+        self.lbl_temperature.config(text="Temp. (C): " + str(self.sensor_w.temperature))
+        self.after(1000, self.update_temp)
 
     def close_app(self):
         self.warehouse_relay.off()
