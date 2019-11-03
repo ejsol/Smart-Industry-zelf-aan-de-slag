@@ -23,7 +23,7 @@ client = Client(url)
 client.connect()
 print("Client is connected")
 print("                                             T = temperature in Celsius")
-print("time     trigger  warehouse-state outside-door  inside-door T-warehouse")
+print("time     trigger  warehouse-state outside-door  inside-door T-doors, T-warehouse")
 
 while True:
     try:
@@ -32,11 +32,15 @@ while True:
         warehouse_state = client.get_node("ns=2;i=4")
         door_outside = client.get_node("ns=2;i=5")
         door_inside = client.get_node("ns=2;i=6")
-        temperature_warehouse = client.get_node("ns=2;i=7")
-
-        print('{} '.format(temperature_time.get_value().strftime("%X")), "  ", trigger.get_value(), "     ",
-              int(warehouse_state.get_value()), "          ", int(door_outside.get_value()), "           ",
-              int(door_inside.get_value()), "         ", temperature_warehouse.get_value())
+        temperature_doors = client.get_node("ns=2;i=7")
+        temperature_warehouse = client.get_node("ns=2;i=8")
+        print('{} '.format(temperature_time.get_value().strftime("%X")), "  ",
+              trigger.get_value(), "     ",
+              int(warehouse_state.get_value()), "          ",
+              int(door_outside.get_value()), "           ",
+              int(door_inside.get_value()), "         ",
+              temperature_doors.get_value(), " ",
+              temperature_warehouse.get_value())
         time.sleep(5)
     except KeyboardInterrupt:
         client.disconnect()

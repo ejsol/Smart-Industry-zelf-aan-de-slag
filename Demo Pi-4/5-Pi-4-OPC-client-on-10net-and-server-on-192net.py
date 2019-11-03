@@ -13,22 +13,27 @@ client = Client(url)
 client.connect()
 print("Client is connected")
 print("                                                               T = temperature Celsius")
-print("time       trigger  warehouse outside-door  inside-door Q-air  T-outdoor  T-warehouse")
+print("time       trigger  warehouse outside-door  inside-door Q-air  T-outdoor  T-doors T-warehouse")
 
 while True:
     try:
-        temperature_warehouse = client.get_node("ns=2;i=3")
         temperature_time = client.get_node("ns=2;i=2")
-        temperature_outdoor = client.get_node("ns=2;i=4")
-        warehouse_air = client.get_node("ns=2;i=5")
-        trigger = client.get_node("ns=2;i=6")
-        warehouse_state = client.get_node("ns=2;i=7")
-        door_outside = client.get_node("ns=2;i=8")
-        door_inside = client.get_node("ns=2;i=9")
+        temperature_warehouse = client.get_node("ns=2;i=3")
+        temperature_doors = client.get_node("ns=2;i=4")
+        temperature_outdoor = client.get_node("ns=2;i=5")
+        warehouse_air = client.get_node("ns=2;i=6")
+        trigger = client.get_node("ns=2;i=7")
+        warehouse_state = client.get_node("ns=2;i=8")
+        door_outside = client.get_node("ns=2;i=9")
+        door_inside = client.get_node("ns=2;i=10")
         print('{} '.format(temperature_time.get_value().strftime("%X")), "  ", trigger.get_value(), "  ",
-              int(warehouse_state.get_value()), "          ", int(door_outside.get_value()), "         ",
-              int(door_inside.get_value()), "        ", warehouse_air.get_value(), "  ",
-              temperature_outdoor.get_value(), "      ", temperature_warehouse.get_value())
+              int(warehouse_state.get_value()), "          ",
+              int(door_outside.get_value()), "         ",
+              int(door_inside.get_value()), "        ",
+              warehouse_air.get_value(), "  ",
+              temperature_outdoor.get_value(), "      ",
+              temperature_doors.get_value(), " ",
+              temperature_warehouse.get_value())
 
         time.sleep(5)
     except KeyboardInterrupt:

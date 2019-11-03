@@ -89,9 +89,10 @@ class MyGroveOpcTerminalApp:
         self.door_inside_relay = GroveRelay(24)
 
         self.time_stamp = datetime.now()
-        self.temperature_warehouse = Factory.getTemper("MCP9808-I2C")
+        self.temperature_doors = Factory.getTemper("MCP9808-I2C", 0x18)
+        self.temperature_doors.resolution(Temper.RES_1_16_CELSIUS)
+        self.temperature_warehouse = Factory.getTemper("MCP9808-I2C", 0x19)
         self.temperature_warehouse.resolution(Temper.RES_1_16_CELSIUS)
-
         print('starting OPC server ')
         self.opc_server = Server(shelffile="/home/pi/grove-opc-server")
         # shelffile is trick with freeopcua to speedup loading of xml object base
@@ -111,19 +112,21 @@ class MyGroveOpcTerminalApp:
         self.opc_warehouse_state = self.param.add_variable(self.addspace, "Warehouse state", 0)
         self.opc_door_outside = self.param.add_variable(self.addspace, "Outside door", 0)
         self.opc_door_inside = self.param.add_variable(self.addspace, "Inside door", 0)
+        self.opc_temperature_d = self.param.add_variable(self.addspace, "Temperature doorlock", 0.0)
         self.opc_temperature_w = self.param.add_variable(self.addspace, "Temperature warehouse", 0.0)
 
-        self.opc_time.set_writable()
-        self.opc_trigger.set_writable()
-        self.opc_warehouse_state.set_writable()
-        self.opc_door_outside.set_writable()
-        self.opc_door_inside.set_writable()
-        self.opc_temperature_w.set_writable()
+        self.opc_time.set_read_only()
+        self.opc_trigger.set_read_only()
+        self.opc_warehouse_state.set_read_only()
+        self.opc_door_outside.set_read_only()
+        self.opc_door_inside.set_read_only()
+        self.opc_temperature_d.set_read_only()
+        self.opc_temperature_w.set_read_only()
 
         print('starting OPC server .....')
         self.opc_server.start()
         print("OPC UA Server started at {}".format(self.opc_url))
-        print("time    Celsius warehouse")
+        print("time      Doors Warehouse (Celsius)")
 
     def closeapp(self):
         self.warehouse_relay.off()
@@ -140,8 +143,11 @@ class MyGroveOpcTerminalApp:
     def update_opc(self, trigger):
         self.time_stamp = datetime.now()
         self.opc_time.set_value(self.time_stamp)
+        self.opc_temperature_d.set_value(self.temperature_doors.temperature)
         self.opc_temperature_w.set_value(self.temperature_warehouse.temperature)
-        print('{} '.format(self.time_stamp.strftime("%X")), '{}'.format(self.temperature_warehouse.temperature))
+        print('{} {:.1f} {:.1f}'.format(self.time_stamp.strftime("%X"),
+                                        self.temperature_doors.temperature,
+                                        self.temperature_warehouse.temperature))
         self.opc_trigger.set_value(trigger)
         self.opc_warehouse_state.set_value(self.warehouse_state)
         self.opc_door_outside.set_value(self.door_outside_state)

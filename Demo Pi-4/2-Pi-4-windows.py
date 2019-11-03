@@ -100,9 +100,12 @@ class MyGroveStandAloneApp(tk.Frame):
         self.door_outside_relay = GroveRelay(24)
         self.door_inside_relay = GroveRelay(26)
 
-        self.sensor_w = Factory.getTemper("MCP9808-I2C")
-        self.sensor_o = Factory.getTemper("NTC-ADC", 2)
+        self.sensor_d = Factory.getTemper("MCP9808-I2C", 0x18)
+        self.sensor_d.resolution(Temper.RES_1_16_CELSIUS)
+        self.sensor_w = Factory.getTemper("MCP9808-I2C", 0x19)
         self.sensor_w.resolution(Temper.RES_1_16_CELSIUS)
+        self.sensor_o = Factory.getTemper("NTC-ADC", 0x00, 2)
+        print('{} Celsius door temperature'.format(self.sensor_d.temperature))
         print('{} Celsius warehouse temperature'.format(self.sensor_w.temperature))
         print('{} Celsius outside temperature'.format(int(self.sensor_o.temperature)))
 
@@ -193,7 +196,7 @@ class MyGroveStandAloneApp(tk.Frame):
         self.lbl_system_on = tk.Label(self.master, text="time on: 0", width=15)
         self.lbl_system_on.grid(row=3, column=3)
 
-        self.lbl_w_temp = tk.Label(self.master, text="wareh. temp", width=15)
+        self.lbl_w_temp = tk.Label(self.master, text="door+wareh. temp", width=15)
         self.lbl_w_temp.grid(row=3, column=4)
 
         # to update temperature every 1 sec, 1000 millisec using the widget.after method
@@ -205,9 +208,9 @@ class MyGroveStandAloneApp(tk.Frame):
 
     def update_temp(self):
         self.lbl_airq.config(text="Air " + str(int(self.sensor_air.value)))
-        self.lbl_o_temp.config(text="Outdoor temp.: " + str(int(self.sensor_o.temperature)))
-        self.lbl_w_temp.config(text="Indoor (C): " + str(self.sensor_w.temperature))
-        self.after(1000, self.update_temp)
+        self.lbl_o_temp.config(text=" Doors temp:   {:.1f} \nWareh. temp: {:.1f}".format(self.sensor_d.temperature, self.sensor_w.temperature))
+        self.lbl_w_temp.config(text="Outdoor temp.: " + str(int(self.sensor_o.temperature)))
+        self.after(500, self.update_temp)
 
     def close_app(self):
         self.warehouse_relay.off()
@@ -263,10 +266,7 @@ class MyGroveStandAloneApp(tk.Frame):
             self.btn_warehouse_on.config(bg='#00CC00', fg='white')
             self.lbl_state_main.config(bg='#00CC00', text="ON")
             self.btn_warehouse_off.config(bg='white', fg='black')
-        # print(self.sensor_air.value, '         ', int(self.sensor_w.temperature), '      ', self.sensor_o.temperature)
-        self.lbl_airq.config(text="Air " + str(int(self.sensor_air.value)))
-        self.lbl_o_temp.config(text="Outdoor temp.: " + str(int(self.sensor_o.temperature)))
-        self.lbl_w_temp.config(text="Indoor (C): " + str(self.sensor_w.temperature))
+
 
     def on_press_door_outside(self):
         if self.warehouse_state:
@@ -294,10 +294,7 @@ class MyGroveStandAloneApp(tk.Frame):
                     self.btn_door_outside_close.config(bg='white', fg='black')
 
                     self.door_time = time.time()
-        # print(self.sensor_air.value, '         ', int(self.sensor_w.temperature), '      ', self.sensor_o.temperature)
-        self.lbl_airq.config(text="Air " + str(int(self.sensor_air.value)))
-        self.lbl_o_temp.config(text="Outdoor temp.: " + str(int(self.sensor_o.temperature)))
-        self.lbl_w_temp.config(text="Indoor (C): " + str(self.sensor_w.temperature))
+
 
     def on_press_door_inside(self):
         if self.warehouse_state:
@@ -325,10 +322,6 @@ class MyGroveStandAloneApp(tk.Frame):
                     self.btn_door_inside_close.config(bg='white', fg='black')
 
                     self.door_time = time.time()
-        # print(self.sensor_air.value, '         ', int(self.sensor_w.temperature), '      ', self.sensor_o.temperature)
-        self.lbl_airq.config(text="Air " + str(int(self.sensor_air.value)))
-        self.lbl_o_temp.config(text="Outdoor temp.: " + str(int(self.sensor_o.temperature)))
-        self.lbl_w_temp.config(text="Indoor (C): " + str(self.sensor_w.temperature))
 
 
 if __name__ == '__main__':

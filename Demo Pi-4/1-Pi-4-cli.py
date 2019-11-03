@@ -91,9 +91,11 @@ def main():
     door_1_relay = GroveRelay(24)
     door_2_relay = GroveRelay(26)
 
-    sensor_w = Factory.getTemper("MCP9808-I2C")
+    sensor_d = Factory.getTemper("MCP9808-I2C", 0x18)
+    sensor_d.resolution(Temper.RES_1_16_CELSIUS)
+    sensor_w = Factory.getTemper("MCP9808-I2C", 0x19)
     sensor_w.resolution(Temper.RES_1_16_CELSIUS)
-    sensor_o = Factory.getTemper("NTC-ADC", 2)
+    sensor_o = Factory.getTemper("NTC-ADC", 0x00, 2)
     sensor_air = GroveAirQualitySensor(6)
 
     def on_press_main():
@@ -142,13 +144,14 @@ def main():
     main_button.on_press = on_press_main
     door_1_button.on_press = on_press_1
     door_2_button.on_press = on_press_2
-    print('time      Air Q   (C) outdoor (C) warehouse temperatures')
+    print('time      Air Q   (C) outdoor, door & warehouse temperatures')
     while True:
         try:
             time.sleep(1)
             print('{} '.format(datetime.now().strftime("%X")),
                   '{}    '.format(sensor_air.value),
                   '{} '.format(int(sensor_o.temperature)),
+                  '{} '.format(sensor_d.temperature),
                   '{}'.format(sensor_w.temperature))
         except KeyboardInterrupt:
             main_relay.off()

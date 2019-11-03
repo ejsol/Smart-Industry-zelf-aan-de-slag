@@ -76,15 +76,16 @@ def main():
     main_button = GroveLedButton(5)
     door_1_button = GroveLedButton(18)
     door_2_button = GroveLedButton(16)
-
     main_relay = GroveRelay(22)
     door_1_relay = GroveRelay(26)
     door_2_relay = GroveRelay(24)
 
-    sensor = Factory.getTemper("MCP9808-I2C")
-    sensor.resolution(Temper.RES_1_16_CELSIUS)
+    sensor_d = Factory.getTemper("MCP9808-I2C", 0x18)
+    sensor_d.resolution(Temper.RES_1_16_CELSIUS)
+    sensor_w = Factory.getTemper("MCP9808-I2C", 0x19)
+    sensor_w.resolution(Temper.RES_1_16_CELSIUS)
 
-    print('Time Temperature (C)')
+    print('Time Temp.: door & warehouse (C)')
 
     def on_press_main():
         global main_state, door_1_state, door_2_state
@@ -136,7 +137,7 @@ def main():
     while True:
         try:
             time.sleep(1)
-            print('{} '.format(datetime.now().strftime("%X")), '{}'.format(sensor.temperature))
+            print('{}   {:.1f}   {:.1f}'.format(datetime.now().strftime("%X"), sensor_d.temperature, sensor_w.temperature))
         except KeyboardInterrupt:
             main_relay.off()
             door_1_relay.off()
