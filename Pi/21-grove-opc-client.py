@@ -25,15 +25,16 @@ print("Client is connected")
 print("                                             T = temperature in Celsius")
 print("time     trigger  warehouse-state outside-door  inside-door T-doors, T-warehouse")
 
+temperature_time = client.get_node("ns=2;i=2")
+trigger = client.get_node("ns=2;i=3")
+warehouse_state = client.get_node("ns=2;i=4")
+door_outside = client.get_node("ns=2;i=5")
+door_inside = client.get_node("ns=2;i=6")
+temperature_doors = client.get_node("ns=2;i=7")
+temperature_warehouse = client.get_node("ns=2;i=8")
+
 while True:
     try:
-        temperature_time = client.get_node("ns=2;i=2")
-        trigger = client.get_node("ns=2;i=3")
-        warehouse_state = client.get_node("ns=2;i=4")
-        door_outside = client.get_node("ns=2;i=5")
-        door_inside = client.get_node("ns=2;i=6")
-        temperature_doors = client.get_node("ns=2;i=7")
-        temperature_warehouse = client.get_node("ns=2;i=8")
         print('{} '.format(temperature_time.get_value().strftime("%X")), "  ",
               trigger.get_value(), "     ",
               int(warehouse_state.get_value()), "          ",

@@ -31,14 +31,15 @@ async def main():
         print("                                             T = temperature in Celsius")
         print("time     warehouse-state outside-door  inside-door T-doors, T-warehouse")
 
+        temperature_time = client.get_node("ns=2;i=2")
+        warehouse_state = client.get_node("ns=2;i=3")
+        door_outside = client.get_node("ns=2;i=4")
+        door_inside = client.get_node("ns=2;i=5")
+        temperature_doors = client.get_node("ns=2;i=6")
+        temperature_warehouse = client.get_node("ns=2;i=7")
+
         while True:
             try:
-                temperature_time = client.get_node("ns=2;i=2")
-                warehouse_state = client.get_node("ns=2;i=3")
-                door_outside = client.get_node("ns=2;i=4")
-                door_inside = client.get_node("ns=2;i=5")
-                temperature_doors = client.get_node("ns=2;i=6")
-                temperature_warehouse = client.get_node("ns=2;i=7")
                 temp_time_value = await temperature_time.get_value()
                 ws_value = await warehouse_state.get_value()
                 di_value = await door_outside.get_value()
