@@ -13,7 +13,7 @@
 from opcua import Client
 import time
 
-url = "opc.tcp://localhost:4840"
+url = "opc.tcp://192.168.4.32:4840"
 # option 1: localhost if run on the Pi itself, you can write opc.tcp://localhost:4840"
 # option 2: 192-net url= "opc.tcp://192.168.0.4 if the Pi=192.168.0.4 and the client is on another node in 192.168.0.0/24
 # option 3: 10-net with firewall url ="opc.tcp://10.0.0.254:54840+your pi nr, e.g. Pi-11 goes to 54851

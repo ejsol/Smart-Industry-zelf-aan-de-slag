@@ -6,7 +6,7 @@
 from opcua import Client
 import time
 
-url = "opc.tcp://10.0.0.254:54843"
+url = "opc.tcp://10.0.0.98:4840"
 client = Client(url)
 client.connect()
 print("Client is connected ")
