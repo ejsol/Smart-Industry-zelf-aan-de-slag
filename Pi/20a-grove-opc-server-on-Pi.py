@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
-# (c) EJSol 12 sept 2019 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
+# (c) EJSol juni 2020 freeware for use in Smart Industry - Zelf Aan de Slag workshop (SIZAS)
 #
 # app running control I/O for doors and collecting temperature data,
 # start from command line and use from other computer opc client to read data from this opc server
