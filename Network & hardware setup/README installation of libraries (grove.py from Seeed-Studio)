@@ -1,0 +1,45 @@
+# Configuration of Pi
+
+- download imager from www.raspberrypi.org/downloads and with microSD card install a Raspberry Pi OS image
+- verify & finish imager and insert SD card into Pi
+- hook up keyboard, mouse, display and opt. Ethernet and boot & initialize with welcome Pi
+
+# once Pi runs, go to Pi menu - Preferences and then Raspberry Pi Configuration and on third tab active interfaces:
+- ssh, VNC and I2C (and optional camera)
+
+# before installing module:
+
+sudo apt update
+sudo apt upgrade
+
+pip3 install opcua
+
+# now come the installation for the Seeed Studio grove.py software and related libraries
+# add repository
+echo "deb https://seeed-studio.github.io/pi_repo/ stretch main" | sudo tee /etc/apt/sources.list.d/seeed.list
+# add public repository key
+curl https://seeed-studio.github.io/pi_repo/public.key | sudo apt-key add -
+# install MRAA and UPM python3 libraries
+sudo apt update
+sudo apt install python3-mraa python3-upm
+# install library raspberry-gpio-python for RPi
+sudo apt update
+sudo apt install python3-rpi.gpio
+# install library rpi_ws281x for RPi
+sudo pip3 install rpi_ws281x
+# install grove.py
+sudo pip3 install grove.py
+
+# And finally the most complex part, the modification of the Grove library to accept multiple I2C temperature sensors.
+# Seeed Grove hard-coded I2C for only one I2C high accuracy temperature sensor, on I2C addr 0x18.
+# However, the hardware itself can be modified for other addresses too by connection soldering pads.
+# In our example we modified one standard sensor with 0x18 into a second sensor on address 0x19 by connecting the pads
+# and, most complicated, but with Python you do get the library sources, modified three files for the grove.py
+#
+# see details description in README grove multiple I2C... file
+#
+# You can avoid this and work with only one I2C high accuracy sensor (and a less accurate analoge sensor).
+# In that case no library editing is necessary, you can skip it, but you need to adapt a little the example code.
+# Either delete the second sensor and the line with the 0x19 addr or replace that line with the call to the analoge sensor
+# (see for the analoge sensor the Demo Pi-4 code, e.g. 1-Pi-4-Cli line 98)
+
