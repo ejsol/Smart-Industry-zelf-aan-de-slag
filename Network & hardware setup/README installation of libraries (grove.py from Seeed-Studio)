@@ -43,3 +43,17 @@ sudo pip3 install grove.py
 # Either delete the second sensor and the line with the 0x19 addr or replace that line with the call to the analoge sensor
 # (see for the analoge sensor the Demo Pi-4 code, e.g. 1-Pi-4-Cli line 98)
 
+# now you only need to clone the Python programs from github ejsol/Smart-Industry-zelf-aan-de-slag
+
+git clone https://github.com/ejsol/Smart-Industry-zelf-aan-de-slag.git
+
+# and for convience copy the Pi files to the Desktop
+
+cp ./Smart-Industry-zelf-aan-de-slag/Pi/*.* ./Desktop/.
+
+# click on the 0-grove-cli.py file and executive it in terminal mode
+#
+# if the two sensor values are identical and even if you warm one, both output increase,
+# then the modification of the libraries went wrong. check then of there is a use of the home/pi/.local/lib/..
+# instead of a /usr/local library files. (this is depending on the path you are using when starting python)
+

@@ -55,6 +55,10 @@ sudo nano pyupm_mcp9808.py
 
 # do the delete of =0x18 at line 137
 
+# remark, it might be that the setting of PATH emforces that Python starts in /home/pi/.local/lib/python3.7/..
+# instead of /usr/local/lib/python3.7...
+# in that case you need to modify the files in the .local directory. 
+
 # sample code with comment:
 
 import time
