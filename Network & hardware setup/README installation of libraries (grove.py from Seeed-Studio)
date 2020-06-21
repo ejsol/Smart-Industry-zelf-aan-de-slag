@@ -15,6 +15,9 @@ sudo apt upgrade
 pip3 install opcua
 
 # now come the installation for the Seeed Studio grove.py software and related libraries
+# use
+curl -sL https://github.com/Seeed-Studio/grove.py/raw/master/install.sh | sudo bash -s -
+# or by step by step do
 # add repository
 echo "deb https://seeed-studio.github.io/pi_repo/ stretch main" | sudo tee /etc/apt/sources.list.d/seeed.list
 # add public repository key
@@ -47,7 +50,7 @@ sudo pip3 install grove.py
 
 git clone https://github.com/ejsol/Smart-Industry-zelf-aan-de-slag.git
 
-# and for convience copy the Pi files to the Desktop
+# and for easy use latter on copy the Pi files to the Desktop
 
 cp ./Smart-Industry-zelf-aan-de-slag/Pi/*.* ./Desktop/.
 
