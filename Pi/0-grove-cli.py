@@ -77,7 +77,7 @@ def main():
     door_1_button = GroveLedButton(18)
     door_2_button = GroveLedButton(16)
     main_relay = GroveRelay(22)
-    door_1_relay = GroveRelay(26)
+     door_1_relay = GroveRelay(26)
     door_2_relay = GroveRelay(24)
 
     sensor_d = Factory.getTemper("MCP9808-I2C", 0x18)
