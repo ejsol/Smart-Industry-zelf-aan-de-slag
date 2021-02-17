@@ -1,33 +1,37 @@
-The network consists of a smart-engineering router, a Mikrotik hAP, with the 10.0.0.0/24 network
-using the following addresses
-10.0.0.1 hAP router (during the session the WAN port ether1 is not connected to Internet)
-10.0.0.2 RevPi core 1
-10.0.0.3 reserved for RevPi core 3 (this RevPi now is located in the smart-factory network at 192.168.0.3)
-10.0.0.4 reserved for Pi-4 (demo Pi with 3 sensors)
+# Firewall setting using a Mikrotik router
 
-10.0.0.10 Pi-10 configuration Pi
-10.0.0.11-16 participants Pi's Pi-11 till Pi-16
+## 10-subnet (the engineering/office network)
 
-10.0.0.20-100 DHCP
+The network consists of a smart-engineering router, a Mikrotik hAP, with the 10.0.0.0/24 network using the following addresses:
 
-10.0.0.254 WAN port of router of the 192.168.0.0/24 smart-factory network, hEX router port 1 (ether1)
+* 10.0.0.1 hAP router (during the session the WAN port ether1 is not connected to Internet)
+* 10.0.0.2 RevPi core 1
+* 10.0.0.3   reserved for RevPi core 3 (this RevPi core 3 is located at 192.168.0.3)
+* 10.0.0.4 reserved for Pi-4 (demo Pi with 3 sensors)
+* 10.0.0.10 Pi-10 configuration Pi
+* 10.0.0.11-16 participants Pi's Pi-11 till Pi-16
+* 10.0.0.20-100 DHCP
+* 10.0.0.254 WAN port of router of the 192.168.0.0/24 smart-factory network, hEX router port 1 (ether1)
 
 The hAP router uses the standard Mikrotik router setting (firewall, etc,) with both the 2.4Ghz and the 5Ghz Wi-Fi 1-5
-activated. Next to Wi-Fi it has 1 WAN and 4 Giga Ethernet ports.
+activated to communicate with the wireless Pi-11 to Pi-16. Next to Wi-Fi it has 1 WAN and 4 Giga Ethernet ports.
 
+Note: in setting up a workshop network, start this hAP router before the Pi-11 to Pi-16.
+
+## 192-subnet (the shielded subnet with equipment/production line)
 
 The 192.168.0.0/24 network smart-factory is shielded by a tightly locked-down router, a Mikrotik hEX router
-with no wifi, only 4 Giga Ethernet ports (ether2-ether5) and the following configuration
-192.168.0.1 hEX router (no Wi-Fi)
-192.168.0.3 RevPi core 3 (Rev3)
-192.168.0.4 Pi-4
+with no wifi, only 4 Giga Ethernet ports (ether2-ether5) and the following configuration:
 
-192.168.0.20-100 DHCP
+* 192.168.0.1 hEX router (no Wi-Fi)
+* 192.168.0.3 RevPi core 3 (Rev3)
+* 192.168.0.4 Pi-4
+* 192.168.0.20-100 DHCP
 
-The hEX router (RouterOS 6.45.3 model RB750Gr3)is connects on its WAN port (ether1) to the 10-net on fixed IP 10.0.0.254 and has its standard firewall
- rule set replaced but the following setting
+The hEX router (RouterOS 6.45.3 model RB750Gr3)is connects on its WAN port (ether1) to the 10-net on fixed IP 10.0.0.254. It firewall rule set is replaced by the following setting
 (copy text and enter it as script in the Mikrotik router terminal interface)
 
+~~~
 /ip firewall filter
 add action=drop chain=input comment="drop invalid to firewall router at 192.168.0.1/24" connection-state=invalid
 add action=accept chain=input comment="allow established connections to firewall router " connection-state=established
@@ -51,3 +55,6 @@ set ftp disabled=yes
 set irc disabled=yes
 set h323 disabled=yes
 set sip disabled=yes
+~~~
+
+Note the line with the dst-nat (destination network address translation). If a packet arrives at 10.0.0.254 on port 54844 it is translated to address 192.168.0.4 port 4840. Port 4840 is the standard port for the OPC-UA protocol. This number is just chosen ourselves along the thinking that is should be above 50000 and have a relation to 192.168.0.4 as fixed number (therefore we said to ourselves that 50000 + 4840 + 4 would be 54844.)
