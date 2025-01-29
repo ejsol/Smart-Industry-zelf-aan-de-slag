@@ -71,5 +71,8 @@ to see the dashboard (optionally after selecting at the localhost:1880  screen t
 
 `$ node-red-stop.`
 
-Egbert-Jan.Sol@TNO.nl
+Egbert-Jan Sol
+ejsol@dse.nl
+
+*was TNO.nl*
 
