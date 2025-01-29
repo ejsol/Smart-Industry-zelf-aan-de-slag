@@ -74,5 +74,5 @@ to see the dashboard (optionally after selecting at the localhost:1880  screen t
 Egbert-Jan Sol
 ejsol@dse.nl
 
-*was TNO.nl*
+*was in 2019 TNO.nl, now retired *
 
